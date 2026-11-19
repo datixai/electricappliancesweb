@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 80" width="708" height="240">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe08a"/>
+      <stop offset=".55" stop-color="#f5b301"/>
+      <stop offset="1" stop-color="#c98a00"/>
+    </linearGradient>
+  </defs>
+  <rect width="236" height="80" fill="#0b1b3a"/>
+  <g transform="translate(8 8)">
+    <rect x="2" y="2" width="60" height="60" rx="16" fill="#0b1b3a"/>
+    <rect x="3" y="3" width="58" height="58" rx="15" fill="none" stroke="url(#g)" stroke-width="2"/>
+    <path d="M43 19.5V13h5v11" fill="url(#g)"/>
+    <path d="M10 31 32 11l22 20" fill="none" stroke="url(#g)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20 53 32 23l12 30" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M34 32 27.5 42h4.6l-2.1 8.5L37 39.5h-4.6z" fill="url(#g)"/>
+  </g>
+  <g font-family="Poppins, Montserrat, Arial, sans-serif">
+    <text x="86" y="36" font-size="27" font-weight="800" letter-spacing="4" fill="#ffffff">ADNAN</text>
+    <text x="87" y="53" font-size="11.5" font-weight="600" letter-spacing="5.2" fill="url(#g)">ELECTRONICS</text>
+    <text x="87" y="69" font-size="9.5" font-weight="500" letter-spacing="2" fill="#a9b6d3">HOUSEHOLD  |  <tspan font-family="Tahoma, Arial, sans-serif" letter-spacing="0">لوازم خانگی</tspan></text>
+  </g>
+</svg>

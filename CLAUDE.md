@@ -45,3 +45,4 @@ npm run build && npm start   # production
 ## Progress log
 - 2026-11-19: Project folder set up, client chats analysed, quote suggested. Built Next.js site v1 with admin panel and pushed to GitHub.
 - 2026-11-19: Site name changed from Silvers Criest to Adnan Electronics Household (لوازم خانگی) at the client's request. Silvers Criest stays as a product brand.
+- 2026-11-19: New logo: gold house roof + white "A" with a lightning bolt crossbar (home + electronics), navy badge. Files in site/public/brand (emblem.svg/png, logo-horizontal.svg/png), favicon site/app/icon.svg, React version Emblem/Logo in components/ui.js.

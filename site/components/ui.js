@@ -1,22 +1,34 @@
 import Link from "next/link";
 import { SITE, CATEGORIES, waLink, catName } from "@/lib/site";
 
+export function Emblem({ size = 48 }) {
+  return (
+    <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true">
+      <defs>
+        <linearGradient id="ae-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffe08a" />
+          <stop offset=".55" stopColor="#f5b301" />
+          <stop offset="1" stopColor="#c98a00" />
+        </linearGradient>
+      </defs>
+      <rect x="2" y="2" width="60" height="60" rx="16" fill="#0b1b3a" />
+      <rect x="3" y="3" width="58" height="58" rx="15" fill="none" stroke="url(#ae-g)" strokeWidth="2" />
+      <path d="M43 19.5V13h5v11" fill="url(#ae-g)" />
+      <path d="M10 31 32 11l22 20" fill="none" stroke="url(#ae-g)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20 53 32 23l12 30" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M34 32 27.5 42h4.6l-2.1 8.5L37 39.5h-4.6z" fill="url(#ae-g)" />
+    </svg>
+  );
+}
+
 export function Logo({ light }) {
   return (
     <Link href="/" className={"logo" + (light ? " light" : "")} aria-label={SITE.name + " home"}>
-      <svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#ffd34d" />
-            <stop offset="1" stopColor="#e09b00" />
-          </linearGradient>
-        </defs>
-        <circle cx="24" cy="24" r="22" fill="none" stroke="url(#lg)" strokeWidth="3" />
-        <text x="24" y="32" textAnchor="middle" fontSize="24" fontWeight="800" fill="url(#lg)" fontFamily="Georgia, serif">A</text>
-      </svg>
-      <span>
-        <b>ADNAN ELECTRONICS</b>
-        <small>Household <span lang="fa" dir="rtl">لوازم خانگی</span></small>
+      <Emblem size={50} />
+      <span className="wordmark">
+        <b>ADNAN</b>
+        <i>ELECTRONICS</i>
+        <small>HOUSEHOLD <em>|</em> <span lang="fa" dir="rtl">لوازم خانگی</span></small>
       </span>
     </Link>
   );
