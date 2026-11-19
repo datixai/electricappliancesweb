@@ -5,7 +5,7 @@ import { Header, Footer, WhatsAppFloat } from "@/components/ui";
 const font = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
 export const metadata = {
-  title: "Silvers Criest | Kitchen Appliances in Dubai",
+  title: "Adnan Electronics Household | Kitchen Appliances in Dubai",
   description: "Air fryers, blenders, choppers, juicers, spice grinders, stoves and kettles. Original products, fast delivery across the UAE.",
 };
 

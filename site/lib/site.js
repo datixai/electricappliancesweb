@@ -1,5 +1,6 @@
 export const SITE = {
-  name: "Silvers Criest",
+  name: "Adnan Electronics Household",
+  nameFa: "لوازم خانگی",
   company: "Disnie Electronics Trading LLC",
   tagline: "Quality kitchen appliances you can trust",
   whatsapp: "971554629676",

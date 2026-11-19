@@ -12,11 +12,11 @@ export function Logo({ light }) {
           </linearGradient>
         </defs>
         <circle cx="24" cy="24" r="22" fill="none" stroke="url(#lg)" strokeWidth="3" />
-        <text x="24" y="31" textAnchor="middle" fontSize="20" fontWeight="800" fill="url(#lg)" fontFamily="Georgia, serif">Sc</text>
+        <text x="24" y="32" textAnchor="middle" fontSize="24" fontWeight="800" fill="url(#lg)" fontFamily="Georgia, serif">A</text>
       </svg>
       <span>
-        <b>SILVERS CRIEST</b>
-        <small>Quality you can trust</small>
+        <b>ADNAN ELECTRONICS</b>
+        <small>Household <span lang="fa" dir="rtl">لوازم خانگی</span></small>
       </span>
     </Link>
   );

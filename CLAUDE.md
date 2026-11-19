@@ -1,4 +1,4 @@
-# Silvers Criest kitchen appliances website (Datix AI web client)
+# Adnan Electronics Household website (Datix AI web client)
 
 Context file for Claude on any PC. Read this first. Update Status, Next steps and the Progress log at the end of every session.
 GitHub: datixai/electricappliancesweb (private work repo).
@@ -9,7 +9,7 @@ Scope, domain risk and the quote: docs/analysis.md. Chat notes: docs/client_chat
 
 ## Status (19 Nov 2026)
 - v1 built in site/ (Next.js 15 App Router, plain CSS, no database):
-  - Storefront: top bar, logo (SVG "Sc" monogram), search, category nav, hero with product collage, category tiles, best sellers, wholesale banner, per-category rows, category pages, product page with gallery and "Order on WhatsApp", search page, floating WhatsApp button (right side).
+  - Storefront: top bar, logo (SVG "A" monogram, name "Adnan Electronics Household" + Persian "لوازم خانگی", set in site/lib/site.js and components/ui.js), search, category nav, hero with product collage, category tiles, best sellers, wholesale banner, per-category rows, category pages, product page with gallery and "Order on WhatsApp", search page, floating WhatsApp button (right side).
   - Admin at /admin: password login, add / edit / delete products, choose category, upload several photos, mark as best seller.
   - 29 seed products from the client's posters in site/data/products.json, photos in site/public/products/pN.jpg (pN = Nth image of client_files/images in Python sorted() order).
 - Quote not sent yet (suggested $700 package, see analysis). English only so far.
@@ -44,3 +44,4 @@ npm run build && npm start   # production
 
 ## Progress log
 - 2026-11-19: Project folder set up, client chats analysed, quote suggested. Built Next.js site v1 with admin panel and pushed to GitHub.
+- 2026-11-19: Site name changed from Silvers Criest to Adnan Electronics Household (لوازم خانگی) at the client's request. Silvers Criest stays as a product brand.
