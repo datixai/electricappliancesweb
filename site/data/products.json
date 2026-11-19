@@ -1,0 +1,528 @@
+[
+  {
+    "id": "af1",
+    "name": "Silver Crest Pro 16L Air Fryer",
+    "model": "SC-7099LED",
+    "brand": "Silver Crest",
+    "category": "air-fryers",
+    "images": [
+      "/products/p22.jpg",
+      "/products/p1.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "16 L large capacity",
+      "LCD touch control",
+      "Glass window to watch cooking",
+      "Up to 80% less fat"
+    ],
+    "description": "Family size digital air fryer with touch screen presets and a see-through window.",
+    "featured": true
+  },
+  {
+    "id": "af2",
+    "name": "Cody Crest 15.5L Air Fryer",
+    "model": "MS-1804",
+    "brand": "Cody Crest",
+    "category": "air-fryers",
+    "images": [
+      "/products/p23.jpg",
+      "/products/p14.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "15.5 L XXL body",
+      "8 cooking presets",
+      "Adjustable 80-200 C",
+      "Timer 0-60 min"
+    ],
+    "description": "Extra large air fryer with 8 one-touch programs and a non-stick basket.",
+    "featured": true
+  },
+  {
+    "id": "af3",
+    "name": "Silver Crest Digital 10L Air Fryer",
+    "model": "SC-KQZX09",
+    "brand": "Silver Crest",
+    "category": "air-fryers",
+    "images": [
+      "/products/p24.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "10 L capacity",
+      "Rapid air technology",
+      "Two heating elements",
+      "60 minute timer"
+    ],
+    "description": "Digital air fryer with double heating for fast, even results."
+  },
+  {
+    "id": "af4",
+    "name": "Dessini Regina 10L Air Fryer",
+    "model": "AF-028A",
+    "brand": "Dessini Regina",
+    "category": "air-fryers",
+    "images": [
+      "/products/p25.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "10 L capacity",
+      "Digital touch control",
+      "1 year warranty"
+    ],
+    "description": "Healthy cooking made easy with less oil and a large basket."
+  },
+  {
+    "id": "af5",
+    "name": "Disnie 13.5L Air Fryer",
+    "model": "AF-1576",
+    "brand": "Disnie",
+    "category": "air-fryers",
+    "images": [
+      "/products/p26.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "13.5 L capacity",
+      "Powerful heating",
+      "Digital touch control",
+      "1 year warranty"
+    ],
+    "description": "Large capacity air fryer for the whole family."
+  },
+  {
+    "id": "af6",
+    "name": "Silvers Criest 13.5L Air Fryer Oven",
+    "model": "SC-JD021",
+    "brand": "Silvers Criest",
+    "category": "air-fryers",
+    "images": [
+      "/products/p32.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "13.5 L capacity",
+      "2200 W",
+      "Digital touch control"
+    ],
+    "description": "Extra large capacity air fryer oven with a viewing window."
+  },
+  {
+    "id": "bl1",
+    "name": "Disnie 3L Blender 8500W",
+    "model": "SC-9880",
+    "brand": "Disnie",
+    "category": "blenders",
+    "images": [
+      "/products/p17.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "3 L jar",
+      "8 stainless steel blades",
+      "Multi-speed control"
+    ],
+    "description": "High power blender for smoothies, ice and soups.",
+    "featured": true
+  },
+  {
+    "id": "bl2",
+    "name": "Helitac 3 in 1 Blender",
+    "model": "HT-1987",
+    "brand": "Helitac",
+    "category": "blenders",
+    "images": [
+      "/products/p30.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "Blend, grind and chop",
+      "Stainless steel blades",
+      "2 speeds with pulse"
+    ],
+    "description": "One machine for blending, grinding and chopping."
+  },
+  {
+    "id": "bl3",
+    "name": "Bosstech Commercial Blender",
+    "model": "BT-7919",
+    "brand": "Bosstech",
+    "category": "blenders",
+    "images": [
+      "/products/p33.jpg",
+      "/products/p18.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "1200 W",
+      "2 L jar",
+      "6 stainless steel blades",
+      "8 speed control"
+    ],
+    "description": "Powerful and reliable blender built for cafes and juice shops.",
+    "featured": true
+  },
+  {
+    "id": "bl4",
+    "name": "Bosstech Multi-Purpose Blender",
+    "model": "BT-9880",
+    "brand": "Bosstech",
+    "category": "blenders",
+    "images": [
+      "/products/p31.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "1200 W",
+      "3 L capacity",
+      "8 blades",
+      "3 years warranty"
+    ],
+    "description": "Multi-purpose blender for juice, shakes and dry grinding."
+  },
+  {
+    "id": "bl5",
+    "name": "Silver Crest Blender Set",
+    "model": "SC-1589",
+    "brand": "Silver Crest",
+    "category": "blenders",
+    "images": [
+      "/products/p20.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "Large jar plus grinder cups",
+      "Strong motor",
+      "Easy to clean"
+    ],
+    "description": "Blender with extra cups for spices and dry grinding."
+  },
+  {
+    "id": "ch1",
+    "name": "Bosstech 8L Chopper",
+    "model": "BT-7600",
+    "brand": "Bosstech",
+    "category": "choppers",
+    "images": [
+      "/products/p6.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "1200 W",
+      "8 L capacity",
+      "3 speed control",
+      "4 blades"
+    ],
+    "description": "Big stainless steel chopper for meat, vegetables and onions.",
+    "featured": true
+  },
+  {
+    "id": "ch2",
+    "name": "Silver Crest 12L Meat Grinder",
+    "model": "SC-7600",
+    "brand": "Silver Crest",
+    "category": "choppers",
+    "images": [
+      "/products/p5.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "12 L stainless steel bowl",
+      "Safety interlock",
+      "Heavy duty motor"
+    ],
+    "description": "Extra large electric meat grinder and chopper."
+  },
+  {
+    "id": "ch3",
+    "name": "Silvers Criest 3.8L Meat Grinder",
+    "model": "SL-2021",
+    "brand": "Silvers Criest",
+    "category": "choppers",
+    "images": [
+      "/products/p27.jpg",
+      "/products/p4.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "3.8 L bowl",
+      "4800 W",
+      "5 blades",
+      "12 months warranty"
+    ],
+    "description": "Fast chopping for meat, garlic and vegetables."
+  },
+  {
+    "id": "ju1",
+    "name": "Bosstech Slow Juicer",
+    "model": "BT-1591",
+    "brand": "Bosstech",
+    "category": "juicers",
+    "images": [
+      "/products/p35.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "Long mashed tuber",
+      "Small noise",
+      "Separates juice and pulp",
+      "3 years warranty"
+    ],
+    "description": "Cold press slow juicer that keeps more nutrition in every glass.",
+    "featured": true
+  },
+  {
+    "id": "ju2",
+    "name": "Bosstech Slow Juicer Steel Body",
+    "model": "BT-1591S",
+    "brand": "Bosstech",
+    "category": "juicers",
+    "images": [
+      "/products/p11.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "Steel body",
+      "90 mm feed tube",
+      "2 squeeze ports",
+      "Safe for children"
+    ],
+    "description": "Premium steel body slow juicer for fresh juice every day."
+  },
+  {
+    "id": "ju3",
+    "name": "Bosstech 5 in 1 Juicer",
+    "model": "BT-555",
+    "brand": "Bosstech",
+    "category": "juicers",
+    "images": [
+      "/products/p19.jpg",
+      "/products/p21.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "5 functions in 1",
+      "3 speeds",
+      "Large juice cup"
+    ],
+    "description": "Juicer, blender, grinder and more in one set."
+  },
+  {
+    "id": "sg1",
+    "name": "Silvers Criest Spice Grinder 250G",
+    "model": "SC-250G",
+    "brand": "Silvers Criest",
+    "category": "spice-grinders",
+    "images": [
+      "/products/p36.jpg",
+      "/products/p34.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "100% copper motor",
+      "250 g capacity",
+      "Stainless steel body"
+    ],
+    "description": "Grind spices, herbs and grains in seconds.",
+    "featured": true
+  },
+  {
+    "id": "sg2",
+    "name": "Silver Crest 2000 GM Power Grinder",
+    "model": "SG-2000",
+    "brand": "Silver Crest",
+    "category": "spice-grinders",
+    "images": [
+      "/products/p38.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "2000 g capacity",
+      "Copper motor",
+      "Golden blade",
+      "Overheat protection"
+    ],
+    "description": "Professional grinder for home and business use."
+  },
+  {
+    "id": "sg3",
+    "name": "Silver Crest 2500 GM Heavy Duty Grinder",
+    "model": "SG-2500",
+    "brand": "Silver Crest",
+    "category": "spice-grinders",
+    "images": [
+      "/products/p39.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "2500 g capacity",
+      "4500 W copper motor",
+      "Food grade stainless steel"
+    ],
+    "description": "Heavy duty grinder for spices, herbs, grains and coffee."
+  },
+  {
+    "id": "st1",
+    "name": "Silvers Criest 3 Burner Gas Stove",
+    "model": "SC-003Y",
+    "brand": "Silvers Criest",
+    "category": "stoves",
+    "images": [
+      "/products/p28.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "3 burners",
+      "Automatic ignition",
+      "Tempered glass top",
+      "Infrared energy saving burner"
+    ],
+    "description": "Modern glass top gas stove for the home kitchen.",
+    "featured": true
+  },
+  {
+    "id": "st2",
+    "name": "Silvers Criest 2 Burner Gas Stove",
+    "model": "MS-002Y",
+    "brand": "Silvers Criest",
+    "category": "stoves",
+    "images": [
+      "/products/p10.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "2 burners",
+      "Automatic ignition",
+      "Stainless steel body"
+    ],
+    "description": "Durable stainless steel stove with gas saving burners."
+  },
+  {
+    "id": "st3",
+    "name": "Silver Crest Gas Stove",
+    "model": "SC-7000C",
+    "brand": "Silver Crest",
+    "category": "stoves",
+    "images": [
+      "/products/p16.jpg",
+      "/products/p9.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "High efficiency burners",
+      "Compact and portable",
+      "Smooth control knobs"
+    ],
+    "description": "Compact gas stove with a protective lid."
+  },
+  {
+    "id": "st4",
+    "name": "Silver Crest Ceramic Stove 3500W",
+    "model": "SC-8788",
+    "brand": "Silver Crest",
+    "category": "stoves",
+    "images": [
+      "/products/p8.jpg",
+      "/products/p7.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "3500 W",
+      "Intelligent touch control",
+      "Works with all pots"
+    ],
+    "description": "Electric ceramic cooker, no gas needed."
+  },
+  {
+    "id": "st5",
+    "name": "OK Silver Crest Double Ceramic Cooker",
+    "model": "3500W",
+    "brand": "Silver Crest",
+    "category": "stoves",
+    "images": [
+      "/products/p15.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "2 cooking zones",
+      "3500 W",
+      "1 year warranty"
+    ],
+    "description": "Double electric ceramic cooker for bigger meals."
+  },
+  {
+    "id": "ke1",
+    "name": "Global Kitchen 1.7L Electric Kettle",
+    "model": "1.7L",
+    "brand": "Global Kitchen",
+    "category": "kettles",
+    "images": [
+      "/products/p40.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "1.7 L capacity",
+      "Fast boiling",
+      "Auto shut-off",
+      "Safe and easy to use"
+    ],
+    "description": "Quick boiling kettle for tea and coffee.",
+    "featured": true
+  },
+  {
+    "id": "ke2",
+    "name": "Silvers Criest Kettle and Tea Maker",
+    "model": "Steel",
+    "brand": "Silvers Criest",
+    "category": "kettles",
+    "images": [
+      "/products/p42.jpg",
+      "/products/p43.jpg",
+      "/products/p41.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "Stainless steel",
+      "Tea pot on top",
+      "2 years warranty"
+    ],
+    "description": "Two level kettle and tea maker for perfect tea every time.",
+    "featured": true
+  },
+  {
+    "id": "ke3",
+    "name": "Silvers Criest Glass Kettle",
+    "model": "SC-503",
+    "brand": "Silvers Criest",
+    "category": "kettles",
+    "images": [
+      "/products/p44.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "Clear glass body",
+      "Rapid boiling",
+      "Stylish design"
+    ],
+    "description": "Glass electric kettle with blue light."
+  },
+  {
+    "id": "ke4",
+    "name": "Silvers Criest 2L Glass Kettle",
+    "model": "2L",
+    "brand": "Silvers Criest",
+    "category": "kettles",
+    "images": [
+      "/products/p45.jpg"
+    ],
+    "price": "",
+    "specs": [
+      "2 L capacity",
+      "BPA free",
+      "2 years warranty"
+    ],
+    "description": "Large glass kettle, safe and fast."
+  }
+]
