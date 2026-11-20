@@ -7,11 +7,12 @@ GitHub: datixai/electricappliancesweb (private work repo).
 Dubai kitchen appliance shop (client via WhatsApp) wants a full REDESIGN of his existing site sliverscriest.com (old developer gone, domain access unclear). Design reference he sent: thesuncart.com (take layout ideas only, never copy its brand, text or images). Categories: Air fryers, Blenders, Choppers, Juicers, Spice grinders, Stoves, Kettles and tea makers. Also wants an invoice template for his phone (not built yet). Home page first for his approval.
 Scope, domain risk and the quote: docs/analysis.md. Chat notes: docs/client_chat.md.
 
-## Status (19 Nov 2026)
+## Status (20 Nov 2026)
 - v1 built in site/ (Next.js 15 App Router, plain CSS, no database):
-  - Storefront: top bar, logo (SVG "A" monogram, name "Adnan Electronics Household" + Persian "لوازم خانگی", set in site/lib/site.js and components/ui.js), search, category nav, hero with product collage, category tiles, best sellers, wholesale banner, per-category rows, category pages, product page with gallery and "Order on WhatsApp", search page, floating WhatsApp button (right side).
+  - Storefront: responsive header, logo (SVG "A" monogram, name "Adnan Electronics Household" + Persian "لوازم خانگی", set in site/lib/site.js and components/ui.js), search, category navigation, redesigned homepage, category pages, product page with gallery and "Order on WhatsApp", search page, floating WhatsApp button (right side).
   - Admin at /admin: password login, add / edit / delete products, choose category, upload several photos, mark as best seller.
   - 29 seed products from the client's posters in site/data/products.json, photos in site/public/products/pN.jpg (pN = Nth image of client_files/images in Python sorted() order).
+- Homepage redesign complete: refreshed hero with an automatic product carousel, category and featured product layouts, simpler product cards, GCC delivery coverage, business footer, and FAQ. The carousel includes manual controls, hover and focus pause, and reduced-motion support. The hero image now fills its panel with cover fitting. Card and product-detail prices share demonstration values and must be confirmed before publishing. No review data is available, so no reviews are shown.
 - Quote not sent yet (suggested $700 package, see analysis). English only so far.
 
 ## How it works
@@ -34,7 +35,7 @@ npm run build && npm start   # production
 - site/                  the Next.js website
 
 ## Next steps
-1. Send the home page to the client for approval, send the quote, get 50% advance.
+1. Review the redesigned homepage with the client, confirm product prices and hero image crop, send the quote, and get 50% advance.
 2. Confirm domain registrar access, then plan hosting in the client's name.
 3. Arabic version, invoice maker for his phone, clean product photos (posters have text on them).
 
@@ -46,3 +47,8 @@ npm run build && npm start   # production
 - 2026-11-19: Project folder set up, client chats analysed, quote suggested. Built Next.js site v1 with admin panel and pushed to GitHub.
 - 2026-11-19: Site name changed from Silvers Criest to Adnan Electronics Household (لوازم خانگی) at the client's request. Silvers Criest stays as a product brand.
 - 2026-11-19: New logo: gold house roof + white "A" with a lightning bolt crossbar (home + electronics), navy badge. Files in site/public/brand (emblem.svg/png, logo-horizontal.svg/png), favicon site/app/icon.svg, React version Emblem/Logo in components/ui.js.
+- 2026-11-20: Redesigned the storefront homepage and shared product cards, added UAE and GCC delivery messaging, an FAQ, Instagram footer link, and polished responsive header and footer. Reviews omitted because no genuine review data exists.
+- 2026-11-20: Added an accessible, responsive hero product carousel with four catalog-based slides, 4.5-second autoplay, manual controls, hover and focus pause, and reduced-motion support.
+- 2026-11-20: Removed the header WhatsApp button and hero CTAs, and added easy-to-update demonstration AED prices to product cards.
+- 2026-11-20: Reused the shared product price formatter on product details so each detail page matches its listing cards.
+- 2026-11-20: Updated the main hero image to cover its available panel and verified the fit on desktop and mobile.
