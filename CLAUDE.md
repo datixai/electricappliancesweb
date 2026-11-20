@@ -13,6 +13,7 @@ Scope, domain risk and the quote: docs/analysis.md. Chat notes: docs/client_chat
   - Admin at /admin: password login, add / edit / delete products, choose category, upload several photos, mark as best seller.
   - 29 seed products from the client's posters in site/data/products.json, photos in site/public/products/pN.jpg (pN = Nth image of client_files/images in Python sorted() order).
 - Homepage redesign complete: refreshed hero with an automatic product carousel, category and featured product layouts, simpler product cards, GCC delivery coverage, business footer, and FAQ. The carousel includes manual controls, hover and focus pause, and reduced-motion support. The hero image now fills its panel with cover fitting. Card and product-detail prices share demonstration values and must be confirmed before publishing. No review data is available, so no reviews are shown.
+- v3 look (20 Nov 2026), same principles as D:/TheLuxeOrganization: /shop page with a centred intro and a full-width photo mosaic of the 7 categories (dark overlay, spaced capital labels, text and gold Discover on hover), category pages with a zooming photo banner and an Other categories strip, richer product cards (category badge, best seller flag, brand, 2 features, More info button), Playfair Display headings, deep ink + champagne gold colours, 4-column footer with Developed by Datix AI linking to datixai.com. Styles in site/app/theme.css (loaded after globals.css), components CategoryMosaic and PageHero in components/ui.js.
 - Quote not sent yet (suggested $700 package, see analysis). English only so far.
 
 ## How it works
@@ -52,3 +53,4 @@ npm run build && npm start   # production
 - 2026-11-20: Removed the header WhatsApp button and hero CTAs, and added easy-to-update demonstration AED prices to product cards.
 - 2026-11-20: Reused the shared product price formatter on product details so each detail page matches its listing cards.
 - 2026-11-20: Updated the main hero image to cover its available panel and verified the fit on desktop and mobile.
+- 2026-11-20: Pulled the other developer's homepage work, then applied the Luxe design principles: new /shop page with category mosaic, category page banners, new product cards with More info, new colours and display font, footer with Developed by Datix AI (datixai.com). Removed the gold line before section labels.

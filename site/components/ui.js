@@ -112,6 +112,7 @@ export function Header() {
       <nav className="catnav" aria-label="Product categories">
         <div className="wrap">
           <Link href="/">Home</Link>
+          <Link href="/shop" className="nav-shop">Shop all</Link>
           {CATEGORIES.map((c) => (
             <Link key={c.slug} href={`/category/${c.slug}`}>{c.name}</Link>
           ))}
@@ -122,23 +123,31 @@ export function Header() {
 }
 
 export function Footer() {
+  const year = new Date().getFullYear();
   return (
     <footer className="site-footer" id="contact">
       <div className="wrap fgrid">
         <div className="footer-company">
           <Logo light />
-          <p>{SITE.company}. Kitchen appliances for homes and businesses, with product support from our team.</p>
-          <p className="footer-delivery">Delivering Across UAE &amp; GCC Countries</p>
+          <p>{SITE.company}. Kitchen appliances for homes and businesses, chosen for daily use and backed by warranty.</p>
+          <p className="footer-delivery">Delivering across the UAE &amp; GCC</p>
         </div>
         <div>
-          <h4>Quick links</h4>
+          <h4>Shop</h4>
+          <Link href="/shop">All categories</Link>
+          {CATEGORIES.map((c) => (
+            <Link key={c.slug} href={`/category/${c.slug}`}>{c.name}</Link>
+          ))}
+        </div>
+        <div>
+          <h4>Explore</h4>
           <Link href="/">Home</Link>
-          <Link href="/#products">Products</Link>
-          <Link href="/#categories">Categories</Link>
-          <Link href="#contact">Contact us</Link>
+          <Link href="/#products">Featured products</Link>
+          <Link href="/#faq">Questions</Link>
+          <Link href="/search?q=">Search products</Link>
         </div>
         <div>
-          <h4>Contact information</h4>
+          <h4>Visit or contact us</h4>
           <p>{SITE.address}</p>
           <p><a href={"tel:" + SITE.phone.replace(/\s/g, "")}>Phone: {SITE.phone}</a></p>
           <p><a href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp: {SITE.phone}</a></p>
@@ -152,7 +161,12 @@ export function Footer() {
           </a>
         </div>
       </div>
-      <div className="copy"><span>© {new Date().getFullYear()} {SITE.company}. All rights reserved.</span><span>Dubai, UAE · Delivering across UAE &amp; GCC countries</span></div>
+      <div className="copy">
+        <span>© {year} {SITE.company}. All rights reserved.</span>
+        <a href="https://www.datixai.com" target="_blank" rel="noopener noreferrer" className="datix-credit">
+          Developed by <b>Datix AI</b>
+        </a>
+      </div>
     </footer>
   );
 }
@@ -167,18 +181,61 @@ export function WhatsAppFloat() {
 }
 
 export function ProductCard({ p }) {
+  const href = `/product/${p.id}`;
   return (
-    <div className="card">
-      <Link href={`/product/${p.id}`} className="card-img">
+    <article className="card">
+      <Link href={href} className="card-img">
         <img src={p.images?.[0] || "/products/p1.jpg"} alt={p.name} loading="lazy" />
+        <span className="card-badge">{catName(p.category)}</span>
+        {p.featured && <span className="card-flag">Best seller</span>}
       </Link>
       <div className="card-body">
-        <span className="chip">{catName(p.category)}</span>
-        <Link href={`/product/${p.id}`} className="card-title">{p.name}</Link>
-        <span className="muted">{p.brand}{p.model ? " · " + p.model : ""}</span>
-        <b className="price">{formatProductPrice(p)}</b>
-        <Link href={`/product/${p.id}`} className="card-details">View details</Link>
+        <span className="card-brand">{p.brand}</span>
+        <Link href={href} className="card-title">{p.name}</Link>
+        {p.model && <span className="card-model">Model {p.model}</span>}
+        {p.specs?.length > 0 && (
+          <ul className="card-specs">{p.specs.slice(0, 2).map((s, i) => <li key={i}>{s}</li>)}</ul>
+        )}
+        <div className="card-foot">
+          <b className="price">{formatProductPrice(p)}</b>
+          <Link href={href} className="card-details">More info <span aria-hidden="true">→</span></Link>
+        </div>
       </div>
+    </article>
+  );
+}
+
+export function CategoryMosaic({ counts = {}, exclude }) {
+  const list = CATEGORIES.filter((c) => c.slug !== exclude);
+  return (
+    <div className={"mosaic" + (exclude ? " mosaic-strip" : "")}>
+      {list.map((c, i) => (
+        <Link key={c.slug} href={`/category/${c.slug}`} className={"mtile m" + (i + 1)}>
+          <img src={c.img} alt="" loading="lazy" />
+          <span className="m-shade" aria-hidden="true" />
+          <div className="m-text">
+            <h3>{c.name}</h3>
+            <p>{c.blurb}</p>
+            {counts[c.slug] != null && <small>{counts[c.slug]} products</small>}
+            <span className="m-cta">Discover</span>
+          </div>
+        </Link>
+      ))}
     </div>
+  );
+}
+
+export function PageHero({ eyebrow, title, intro, image, children }) {
+  return (
+    <section className="page-hero">
+      {image && <div className="ph-bg"><img src={image} alt="" /></div>}
+      <div className="ph-shade" aria-hidden="true" />
+      <div className="wrap ph-inner">
+        {eyebrow && <p className="eyebrow light">{eyebrow}</p>}
+        <h1>{title}</h1>
+        {intro && <p className="ph-intro">{intro}</p>}
+        {children}
+      </div>
+    </section>
   );
 }

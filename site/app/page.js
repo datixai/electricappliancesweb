@@ -41,7 +41,7 @@ export default async function Home() {
       <section className="wrap section" id="categories">
         <div className="sec-head section-heading">
           <div><span className="section-kicker">Explore the collection</span><h2>Shop by category</h2></div>
-          <p>Everyday essentials for a more capable kitchen.</p>
+          <p>Everyday essentials for a more capable kitchen. <Link href="/shop" className="link">Shop all categories</Link></p>
         </div>
         <div className="cat-grid">
           {CATEGORIES.map((c) => (
