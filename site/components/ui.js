@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NavLinks from "./NavLinks";
 import { SITE, CATEGORIES, waLink, catName } from "@/lib/site";
 
 // Demonstration values only. Replace with verified prices when they are available.
@@ -111,11 +112,7 @@ export function Header() {
       </div>
       <nav className="catnav" aria-label="Product categories">
         <div className="wrap">
-          <Link href="/">Home</Link>
-          <Link href="/shop" className="nav-shop">Shop all</Link>
-          {CATEGORIES.map((c) => (
-            <Link key={c.slug} href={`/category/${c.slug}`}>{c.name}</Link>
-          ))}
+          <NavLinks />
         </div>
       </nav>
     </header>
