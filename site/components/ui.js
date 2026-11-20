@@ -1,6 +1,54 @@
 import Link from "next/link";
 import { SITE, CATEGORIES, waLink, catName } from "@/lib/site";
 
+// Demonstration values only. Replace with verified prices when they are available.
+const DEMO_PRICES = {
+  af1: 399,
+  af2: 359,
+  af3: 289,
+  af4: 229,
+  af5: 319,
+  af6: 379,
+  bl1: 179,
+  bl2: 149,
+  bl3: 299,
+  bl4: 239,
+  bl5: 189,
+  ch1: 169,
+  ch2: 219,
+  ch3: 89,
+  ju1: 269,
+  ju2: 329,
+  ju3: 209,
+  sg1: 79,
+  sg2: 259,
+  sg3: 279,
+  st1: 199,
+  st2: 119,
+  st3: 99,
+  st4: 159,
+  st5: 249,
+  ke1: 39,
+  ke2: 99,
+  ke3: 59,
+  ke4: 69,
+};
+
+const DEMO_CATEGORY_PRICES = {
+  "air-fryers": 329,
+  blenders: 199,
+  choppers: 149,
+  juicers: 249,
+  "spice-grinders": 149,
+  stoves: 149,
+  kettles: 69,
+};
+
+export function formatProductPrice(p) {
+  const price = p.price || DEMO_PRICES[p.id] || DEMO_CATEGORY_PRICES[p.category];
+  return `AED ${Number(price).toFixed(2)}`;
+}
+
 export function Emblem({ size = 48 }) {
   return (
     <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true">
@@ -47,9 +95,9 @@ export function Header() {
     <header className="site-header">
       <div className="topbar">
         <div className="wrap">
-          <span>Fast delivery across the UAE</span>
-          <span className="hide-sm">100% original products with warranty</span>
-          <a href={waLink()} target="_blank" rel="noopener">WhatsApp {SITE.phone}</a>
+          <span>Fast Delivery Across UAE &amp; GCC Countries</span>
+          <span className="topbar-assurance">100% Original Products With Warranty</span>
+          <a href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp {SITE.phone}</a>
         </div>
       </div>
       <div className="mainbar">
@@ -57,12 +105,11 @@ export function Header() {
           <Logo />
           <form action="/search" className="search">
             <input name="q" placeholder="Search air fryers, blenders, kettles..." aria-label="Search products" />
-            <button type="submit">Search</button>
+            <button type="submit" aria-label="Search">Search</button>
           </form>
-          <a className="btn-wa hide-sm" href={waLink()} target="_blank" rel="noopener"><WaIcon size={18} /> Order on WhatsApp</a>
         </div>
       </div>
-      <nav className="catnav">
+      <nav className="catnav" aria-label="Product categories">
         <div className="wrap">
           <Link href="/">Home</Link>
           {CATEGORIES.map((c) => (
@@ -76,25 +123,36 @@ export function Header() {
 
 export function Footer() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" id="contact">
       <div className="wrap fgrid">
-        <div>
+        <div className="footer-company">
           <Logo light />
-          <p>{SITE.company}. Your trusted partner for quality kitchen appliances in Dubai and across the UAE.</p>
+          <p>{SITE.company}. Kitchen appliances for homes and businesses, with product support from our team.</p>
+          <p className="footer-delivery">Delivering Across UAE &amp; GCC Countries</p>
         </div>
         <div>
-          <h4>Categories</h4>
-          {CATEGORIES.map((c) => (
-            <Link key={c.slug} href={`/category/${c.slug}`}>{c.name}</Link>
-          ))}
+          <h4>Quick links</h4>
+          <Link href="/">Home</Link>
+          <Link href="/#products">Products</Link>
+          <Link href="/#categories">Categories</Link>
+          <Link href="#contact">Contact us</Link>
         </div>
         <div>
-          <h4>Visit or contact us</h4>
+          <h4>Contact information</h4>
           <p>{SITE.address}</p>
-          <p><a href={waLink()} target="_blank" rel="noopener">WhatsApp: {SITE.phone}</a></p>
+          <p><a href={"tel:" + SITE.phone.replace(/\s/g, "")}>Phone: {SITE.phone}</a></p>
+          <p><a href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp: {SITE.phone}</a></p>
+          <a className="instagram-link" href="https://www.instagram.com/adnanhousehold?evlk=aG55Y2RlMjYxaWw0&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Visit Adnan Electronics on Instagram">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8" />
+              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />
+              <circle cx="17.5" cy="6.8" r="1" fill="currentColor" />
+            </svg>
+            Instagram
+          </a>
         </div>
       </div>
-      <div className="copy">© {new Date().getFullYear()} {SITE.company}. Website by Datix AI.</div>
+      <div className="copy"><span>© {new Date().getFullYear()} {SITE.company}. All rights reserved.</span><span>Dubai, UAE · Delivering across UAE &amp; GCC countries</span></div>
     </footer>
   );
 }
@@ -118,12 +176,8 @@ export function ProductCard({ p }) {
         <span className="chip">{catName(p.category)}</span>
         <Link href={`/product/${p.id}`} className="card-title">{p.name}</Link>
         <span className="muted">{p.brand}{p.model ? " · " + p.model : ""}</span>
-        <div className="card-foot">
-          <b className="price">{p.price ? "AED " + p.price : "Ask for price"}</b>
-          <a className="mini-wa" href={waLink(`Hello, I want to order: ${p.name} (${p.model})`)} target="_blank" rel="noopener" aria-label={"Order " + p.name + " on WhatsApp"}>
-            <WaIcon size={18} />
-          </a>
-        </div>
+        <b className="price">{formatProductPrice(p)}</b>
+        <Link href={`/product/${p.id}`} className="card-details">View details</Link>
       </div>
     </div>
   );
