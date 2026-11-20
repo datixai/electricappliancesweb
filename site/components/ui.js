@@ -148,6 +148,7 @@ export function Footer() {
           <p>{SITE.address}</p>
           <p><a href={"tel:" + SITE.phone.replace(/\s/g, "")}>Phone: {SITE.phone}</a></p>
           <p><a href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp: {SITE.phone}</a></p>
+          <p><a href="mailto:adnandisnie@gmail.com"><span aria-hidden="true">✉️</span> Email: adnandisnie@gmail.com</a></p>
           <a className="instagram-link" href="https://www.instagram.com/adnanhousehold?evlk=aG55Y2RlMjYxaWw0&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Visit Adnan Electronics on Instagram">
             <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
               <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8" />

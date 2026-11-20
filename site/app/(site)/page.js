@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { getProducts } from "@/lib/store";
-import { CATEGORIES, waLink } from "@/lib/site";
-import { CategoryMosaic, ProductCard } from "@/components/ui";
+import { waLink } from "@/lib/site";
+import { ProductCard } from "@/components/ui";
 import HeroSlider from "@/components/HeroSlider";
 
 export const dynamic = "force-dynamic";
@@ -15,22 +14,10 @@ export default async function Home() {
     { key: "blend", kicker: "Blenders", title: "A better blend for every day", text: "From smoothies to dry grinding, powerful blenders for home kitchens, cafes and juice shops.", href: "/category/blenders", cta: "Shop blenders", image: "/products/p13.jpg", pos: "center", alt: "Blender set in a kitchen", tagSmall: "Disnie", tag: "Blender and grinder set" },
     { key: "fry", kicker: "Air fryers", title: "Crispy and golden, with less oil", text: "Large 10 to 16 litre digital air fryers with touch presets and see-through windows.", href: "/category/air-fryers", cta: "Shop air fryers", image: "/products/p14.jpg", pos: "center", alt: "Cody Crest digital air fryer", tagSmall: "Cody Crest", tag: "15L digital air fryer" },
   ];
-  const counts = Object.fromEntries(CATEGORIES.map((c) => [c.slug, products.filter((p) => p.category === c.slug).length]));
-
   return (
     <>
       <section className="home-hero">
         <HeroSlider slides={heroSlides} />
-      </section>
-
-      <section className="home-cats" id="categories">
-        <div className="wrap section">
-        <div className="sec-head section-heading">
-          <div><span className="section-kicker">Explore the collection</span><h2>Shop by category</h2></div>
-          <p>Everyday essentials for a more capable kitchen. <Link href="/shop" className="link">Shop all categories</Link></p>
-        </div>
-        </div>
-        <CategoryMosaic counts={counts} />
       </section>
 
       <section className="featured-section" id="products">
@@ -75,18 +62,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="wrap section faq-section" id="faq">
-        <div className="sec-head section-heading">
-          <div><span className="section-kicker">Need a hand?</span><h2>Frequently asked questions</h2></div>
-          <p>Get in touch if you need help with a specific product.</p>
-        </div>
-        <div className="faq-list">
-          <details><summary>What kinds of appliances can I find?</summary><p>Browse air fryers, blenders, choppers, juicers, spice grinders, stoves, kettles and tea makers.</p></details>
-          <details><summary>How can I ask about a product or its price?</summary><p>Open a product page and use its WhatsApp inquiry button to contact our team about that item.</p></details>
-          <details><summary>Where does Adnan Electronics deliver?</summary><p>Delivery is available across the UAE, Saudi Arabia, Qatar, Kuwait, Bahrain and Oman. Contact us for details about your order.</p></details>
-          <details><summary>Where can I find warranty information?</summary><p>Check the product details for the available warranty information, or contact our team if you have a question.</p></details>
-        </div>
-      </section>
     </>
   );
 }
