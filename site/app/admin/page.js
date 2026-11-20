@@ -1,3 +1,4 @@
+import "./admin.css";
 import { getProducts, isAdmin } from "@/lib/store";
 import { CATEGORIES } from "@/lib/site";
 import AdminPanel, { Login } from "./AdminPanel";

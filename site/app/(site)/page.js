@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getProducts } from "@/lib/store";
-import { CATEGORIES, catName, waLink } from "@/lib/site";
-import { ProductCard } from "@/components/ui";
+import { CATEGORIES, waLink } from "@/lib/site";
+import { CategoryMosaic, ProductCard } from "@/components/ui";
 import HeroSlider from "@/components/HeroSlider";
 
 export const dynamic = "force-dynamic";
@@ -9,28 +9,13 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   const products = await getProducts();
   const featured = products.filter((p) => p.featured).slice(0, 8);
-  const slideOptions = [
-    { category: "air-fryers", headline: "Thoughtful cooking for every day" },
-    { category: "blenders", headline: "A better blend for every day" },
-    { category: "juicers", headline: "Fresh juice, made at home" },
-    { category: "kettles", headline: "Make tea time your own" },
+  const heroSlides = [
+    { key: "juice", kicker: "Juicers", title: "Fresh juice, made at home", text: "Slow juicers and 5 in 1 juicer sets that keep more nutrition in every glass, for the whole family.", href: "/category/juicers", cta: "Shop juicers", image: "/products/p21.jpg", pos: "center", alt: "Juicer set in a family kitchen", tagSmall: "Bosstech", tag: "5 in 1 Juicer set" },
+    { key: "tea", kicker: "Kettles and tea makers", title: "Make tea time your own", text: "Fast boiling kettles and two level tea makers in steel and glass, ready in minutes.", href: "/category/kettles", cta: "Shop kettles", image: "/products/p41.jpg", pos: "center 30%", alt: "Woman with an electric kettle", tagSmall: "Silvers Criest", tag: "Kettle and tea maker" },
+    { key: "blend", kicker: "Blenders", title: "A better blend for every day", text: "From smoothies to dry grinding, powerful blenders for home kitchens, cafes and juice shops.", href: "/category/blenders", cta: "Shop blenders", image: "/products/p13.jpg", pos: "center", alt: "Blender set in a kitchen", tagSmall: "Disnie", tag: "Blender and grinder set" },
+    { key: "fry", kicker: "Air fryers", title: "Crispy and golden, with less oil", text: "Large 10 to 16 litre digital air fryers with touch presets and see-through windows.", href: "/category/air-fryers", cta: "Shop air fryers", image: "/products/p14.jpg", pos: "center", alt: "Cody Crest digital air fryer", tagSmall: "Cody Crest", tag: "15L digital air fryer" },
   ];
-  const heroSlides = slideOptions.flatMap((option) => {
-    const product = products.find((p) => p.category === option.category && p.featured)
-      || products.find((p) => p.category === option.category);
-    if (!product) return [];
-
-    return [{
-      id: product.id,
-      productName: product.name,
-      brand: product.brand,
-      model: product.model,
-      categoryName: catName(product.category),
-      description: product.description || `Explore our ${catName(product.category).toLowerCase()} collection.`,
-      headline: option.headline,
-      image: product.images?.[0] || CATEGORIES.find((c) => c.slug === option.category)?.img || "/products/p1.jpg",
-    }];
-  });
+  const counts = Object.fromEntries(CATEGORIES.map((c) => [c.slug, products.filter((p) => p.category === c.slug).length]));
 
   return (
     <>
@@ -38,23 +23,14 @@ export default async function Home() {
         <HeroSlider slides={heroSlides} />
       </section>
 
-      <section className="wrap section" id="categories">
+      <section className="home-cats" id="categories">
+        <div className="wrap section">
         <div className="sec-head section-heading">
           <div><span className="section-kicker">Explore the collection</span><h2>Shop by category</h2></div>
           <p>Everyday essentials for a more capable kitchen. <Link href="/shop" className="link">Shop all categories</Link></p>
         </div>
-        <div className="cat-grid">
-          {CATEGORIES.map((c) => (
-            <Link key={c.slug} href={`/category/${c.slug}`} className="cat">
-              <div className="cat-image"><img src={c.img} alt={c.name} loading="lazy" /></div>
-              <div>
-                <b>{c.name}</b>
-                <span>{c.blurb}</span>
-                <span className="cat-explore">Explore category <span aria-hidden="true">↗</span></span>
-              </div>
-            </Link>
-          ))}
         </div>
+        <CategoryMosaic counts={counts} />
       </section>
 
       <section className="featured-section" id="products">
