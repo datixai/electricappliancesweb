@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getProducts } from "@/lib/store";
 import { waLink } from "@/lib/site";
 import { ProductCard } from "@/components/ui";
@@ -20,6 +21,13 @@ export default async function Home() {
         <HeroSlider slides={heroSlides} />
       </section>
 
+      <section className="delivery-section">
+        <div className="wrap delivery-inner">
+          <div><span className="section-kicker">Closer to your kitchen</span><h2>Delivering across the UAE &amp; GCC countries</h2></div>
+          <p>United Arab Emirates <span>·</span> Saudi Arabia <span>·</span> Qatar <span>·</span> Kuwait <span>·</span> Bahrain <span>·</span> Oman</p>
+        </div>
+      </section>
+
       <section className="featured-section" id="products">
         <div className="wrap section">
           <div className="sec-head section-heading">
@@ -27,6 +35,9 @@ export default async function Home() {
             <p>Browse a selection from our kitchen appliance range.</p>
           </div>
           <div className="grid">{featured.map((p) => <ProductCard key={p.id} p={p} />)}</div>
+          <div className="featured-see-all-wrap">
+            <Link href="/shop" className="featured-see-all">See All</Link>
+          </div>
         </div>
       </section>
 
@@ -38,27 +49,6 @@ export default async function Home() {
             <p>Talk to our team about wholesale pricing on commercial blenders, grinders and choppers.</p>
           </div>
           <a href={waLink("Hello, I want wholesale prices.")} target="_blank" rel="noopener noreferrer" className="btn-gold">Ask about wholesale</a>
-        </div>
-      </section>
-
-      <section className="why-section">
-        <div className="wrap section">
-          <div className="sec-head section-heading">
-            <div><span className="section-kicker">A considered choice</span><h2>Why Adnan Electronics</h2></div>
-            <p>Helpful product information and a team ready to assist.</p>
-          </div>
-          <div className="why-grid">
-            <article className="why-item"><span className="why-number">01</span><h3>A considered collection</h3><p>Explore practical appliances for cooking, blending, chopping, juicing and more.</p></article>
-            <article className="why-item"><span className="why-number">02</span><h3>Product details at a glance</h3><p>Review available specifications and warranty information on each product page.</p></article>
-            <article className="why-item"><span className="why-number">03</span><h3>Direct, personal support</h3><p>Contact our team on WhatsApp to ask about a product or request more information.</p></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="delivery-section">
-        <div className="wrap delivery-inner">
-          <div><span className="section-kicker">Closer to your kitchen</span><h2>Delivering across the UAE &amp; GCC countries</h2></div>
-          <p>United Arab Emirates <span>·</span> Saudi Arabia <span>·</span> Qatar <span>·</span> Kuwait <span>·</span> Bahrain <span>·</span> Oman</p>
         </div>
       </section>
 

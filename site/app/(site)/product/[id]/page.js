@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProducts } from "@/lib/store";
 import { catName, waLink } from "@/lib/site";
-import { formatProductPrice, ProductCard, WaIcon } from "@/components/ui";
+import { ProductCard, WaIcon } from "@/components/ui";
 import Gallery from "./Gallery";
 
 export const dynamic = "force-dynamic";
@@ -38,7 +38,6 @@ export default async function Product({ params }) {
             {p.brand && <div><dt>Brand</dt><dd>{p.brand}</dd></div>}
             {p.model && <div><dt>Model</dt><dd>{p.model}</dd></div>}
           </dl>
-          <p className="product-price">{formatProductPrice(p)}</p>
           {p.description && <p className="product-description">{p.description}</p>}
           {p.specs?.length > 0 && (
             <section className="product-specifications" aria-labelledby="product-specifications-title">

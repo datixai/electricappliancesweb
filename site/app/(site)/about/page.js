@@ -31,6 +31,20 @@ export default function About() {
         </figure>
       </section>
 
+      <section className="why-section">
+        <div className="wrap section">
+          <div className="sec-head section-heading">
+            <div><span className="section-kicker">A considered choice</span><h2>Why Adnan Electronics</h2></div>
+            <p>Helpful product information and a team ready to assist.</p>
+          </div>
+          <div className="why-grid">
+            <article className="why-item"><span className="why-number">01</span><h3>A considered collection</h3><p>Explore practical appliances for cooking, blending, chopping, juicing and more.</p></article>
+            <article className="why-item"><span className="why-number">02</span><h3>Product details at a glance</h3><p>Review available specifications and warranty information on each product page.</p></article>
+            <article className="why-item"><span className="why-number">03</span><h3>Direct, personal support</h3><p>Contact our team on WhatsApp to ask about a product or request more information.</p></article>
+          </div>
+        </div>
+      </section>
+
       <section className="about-service">
         <div className="wrap about-service-inner">
           <div>

@@ -3,57 +3,6 @@ import NavLinks from "./NavLinks";
 import ScrollHeader from "./ScrollHeader";
 import { SITE, CATEGORIES, waLink, catName } from "@/lib/site";
 
-// Demonstration values only. Replace with verified prices when they are available.
-const DEMO_PRICES = {
-  af1: 399,
-  af2: 359,
-  af3: 289,
-  af4: 229,
-  af5: 319,
-  af6: 379,
-  bl1: 179,
-  bl2: 149,
-  bl3: 299,
-  bl4: 239,
-  bl5: 189,
-  ch1: 169,
-  ch2: 219,
-  ch3: 89,
-  ju1: 269,
-  ju2: 329,
-  ju3: 209,
-  sg1: 79,
-  sg2: 259,
-  sg3: 279,
-  st1: 199,
-  st2: 119,
-  st3: 99,
-  st4: 159,
-  st5: 249,
-  ke1: 39,
-  ke2: 99,
-  ke3: 59,
-  ke4: 69,
-};
-
-const DEMO_CATEGORY_PRICES = {
-  "air-fryers": 329,
-  blenders: 199,
-  choppers: 149,
-  juicers: 249,
-  "spice-grinders": 149,
-  stoves: 149,
-  kettles: 69,
-};
-
-export function getProductPrice(p) {
-  return Number(p.price || DEMO_PRICES[p.id] || DEMO_CATEGORY_PRICES[p.category]);
-}
-
-export function formatProductPrice(p) {
-  return `AED ${getProductPrice(p).toFixed(2)}`;
-}
-
 export function Emblem({ size = 48 }) {
   return (
     <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true">
@@ -188,7 +137,6 @@ export function ProductCard({ p }) {
           <ul className="card-specs">{p.specs.slice(0, 2).map((s, i) => <li key={i}>{s}</li>)}</ul>
         )}
         <div className="card-foot">
-          <b className="price">{formatProductPrice(p)}</b>
           <Link href={href} className="card-details">More info <span aria-hidden="true">→</span></Link>
         </div>
       </div>

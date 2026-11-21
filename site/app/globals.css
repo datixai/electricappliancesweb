@@ -91,7 +91,6 @@ a { color: inherit; text-decoration: none; }
 .chip { align-self: flex-start; background: #fff4d1; color: #8a6200; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
 .card-title { font-weight: 600; line-height: 1.35; }
 .card-foot { margin-top: auto; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; }
-.price { color: var(--red); }
 .mini-wa { background: var(--wa); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; }
 .promo { background: linear-gradient(120deg, var(--gold2), var(--gold)); margin: 20px 0; }
 .promo-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 36px 16px; flex-wrap: wrap; color: var(--navy); }
@@ -221,7 +220,6 @@ a { color: inherit; text-decoration: none; }
 .chip { padding: 4px 7px; border-radius: 2px; color: #826300; background: #faf3df; font-size: 9px; letter-spacing: .04em; text-transform: uppercase; }
 .card-title { min-height: 36px; color: var(--navy); font-size: 13px; font-weight: 600; }
 .card-body .muted { font-size: 10px; }
-.price { margin-top: 2px; color: var(--navy); font-size: 12px; font-weight: 600; }
 .card-details { display: block; margin-top: 8px; padding: 10px 12px; border: 1px solid #dfe3eb; border-radius: 3px; color: var(--navy); text-align: center; font-size: 11px; font-weight: 600; transition: color .2s, background .2s, border-color .2s; }
 .card-details:hover { border-color: var(--navy); color: #fff; background: var(--navy); }
 
@@ -322,7 +320,6 @@ a { color: inherit; text-decoration: none; }
   .card-body { padding: 11px; gap: 6px; }
   .card-title { min-height: 34px; font-size: 11px; }
   .card-body .muted { font-size: 9px; }
-  .price { font-size: 10px; }
   .card-details { padding: 9px 8px; font-size: 10px; }
   .promo-inner { min-height: 0; align-items: flex-start; padding-top: 32px; padding-bottom: 32px; }
   .promo h2 { font-size: 23px; }

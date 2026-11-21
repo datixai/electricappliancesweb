@@ -2,12 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { CATEGORIES } from "@/lib/site";
-import { getProductPrice, ProductCard } from "@/components/ui";
+import { ProductCard } from "@/components/ui";
 
 const SORT_OPTIONS = [
   { value: "featured", label: "Featured" },
-  { value: "price-asc", label: "Price: Low to High" },
-  { value: "price-desc", label: "Price: High to Low" },
   { value: "name-asc", label: "Name: A to Z" },
   { value: "name-desc", label: "Name: Z to A" },
 ];
@@ -15,8 +13,6 @@ const SORT_OPTIONS = [
 export default function ShopFilters({ products }) {
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
   const [sort, setSort] = useState("featured");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -27,26 +23,15 @@ export default function ShopFilters({ products }) {
   const activeFilters = [
     ...(category ? [{ key: "category", label: CATEGORIES.find((item) => item.slug === category)?.name || category }] : []),
     ...(brand ? [{ key: "brand", label: brand }] : []),
-    ...(minPrice !== "" ? [{ key: "minPrice", label: `From AED ${minPrice}` }] : []),
-    ...(maxPrice !== "" ? [{ key: "maxPrice", label: `Up to AED ${maxPrice}` }] : []),
   ];
 
   const filteredProducts = useMemo(() => {
-    const min = minPrice === "" ? null : Number(minPrice);
-    const max = maxPrice === "" ? null : Number(maxPrice);
     const result = products.filter((product) => {
-      const price = getProductPrice(product);
       return (!category || product.category === category)
-        && (!brand || product.brand === brand)
-        && (min === null || price >= min)
-        && (max === null || price <= max);
+        && (!brand || product.brand === brand);
     });
 
     switch (sort) {
-      case "price-asc":
-        return result.sort((a, b) => getProductPrice(a) - getProductPrice(b));
-      case "price-desc":
-        return result.sort((a, b) => getProductPrice(b) - getProductPrice(a));
       case "name-asc":
         return result.sort((a, b) => a.name.localeCompare(b.name));
       case "name-desc":
@@ -54,7 +39,7 @@ export default function ShopFilters({ products }) {
       default:
         return result.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
     }
-  }, [products, category, brand, minPrice, maxPrice, sort]);
+  }, [products, category, brand, sort]);
 
   useEffect(() => {
     if (!filtersOpen) return undefined;
@@ -68,16 +53,12 @@ export default function ShopFilters({ products }) {
   function clearAll() {
     setCategory("");
     setBrand("");
-    setMinPrice("");
-    setMaxPrice("");
     setSort("featured");
   }
 
   function removeFilter(key) {
     if (key === "category") setCategory("");
     if (key === "brand") setBrand("");
-    if (key === "minPrice") setMinPrice("");
-    if (key === "maxPrice") setMaxPrice("");
   }
 
   return (
@@ -131,20 +112,6 @@ export default function ShopFilters({ products }) {
               {brands.map((item) => <option key={item} value={item}>{item}</option>)}
             </select>
           </label>
-
-          <fieldset className="filter-field filter-price">
-            <legend>Price range (AED)</legend>
-            <div>
-              <label>
-                <span>Minimum</span>
-                <input type="number" min="0" step="1" inputMode="decimal" value={minPrice} onChange={(event) => setMinPrice(event.target.value)} placeholder="From" />
-              </label>
-              <label>
-                <span>Maximum</span>
-                <input type="number" min="0" step="1" inputMode="decimal" value={maxPrice} onChange={(event) => setMaxPrice(event.target.value)} placeholder="To" />
-              </label>
-            </div>
-          </fieldset>
 
           <label className="filter-field">
             <span>Sort by</span>
