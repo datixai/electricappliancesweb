@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NavLinks from "./NavLinks";
+import ScrollHeader from "./ScrollHeader";
 import { SITE, CATEGORIES, waLink, catName } from "@/lib/site";
 
 // Demonstration values only. Replace with verified prices when they are available.
@@ -45,9 +46,12 @@ const DEMO_CATEGORY_PRICES = {
   kettles: 69,
 };
 
+export function getProductPrice(p) {
+  return Number(p.price || DEMO_PRICES[p.id] || DEMO_CATEGORY_PRICES[p.category]);
+}
+
 export function formatProductPrice(p) {
-  const price = p.price || DEMO_PRICES[p.id] || DEMO_CATEGORY_PRICES[p.category];
-  return `AED ${Number(price).toFixed(2)}`;
+  return `AED ${getProductPrice(p).toFixed(2)}`;
 }
 
 export function Emblem({ size = 48 }) {
@@ -93,29 +97,16 @@ export function WaIcon({ size = 22 }) {
 
 export function Header() {
   return (
-    <header className="site-header">
-      <div className="topbar">
-        <div className="wrap">
-          <span>Fast Delivery Across UAE &amp; GCC Countries</span>
-          <span className="topbar-assurance">100% Original Products With Warranty</span>
-          <a href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp {SITE.phone}</a>
-        </div>
-      </div>
+    <ScrollHeader>
       <div className="mainbar">
-        <div className="wrap">
+        <div className="wrap header-inner">
           <Logo />
-          <form action="/search" className="search">
-            <input name="q" placeholder="Search air fryers, blenders, kettles..." aria-label="Search products" />
-            <button type="submit" aria-label="Search">Search</button>
-          </form>
+          <nav className="catnav" aria-label="Main navigation">
+            <NavLinks />
+          </nav>
         </div>
       </div>
-      <nav className="catnav" aria-label="Product categories">
-        <div className="wrap">
-          <NavLinks />
-        </div>
-      </nav>
-    </header>
+    </ScrollHeader>
   );
 }
 
@@ -139,6 +130,8 @@ export function Footer() {
         <div>
           <h4>Explore</h4>
           <Link href="/">Home</Link>
+          <Link href="/about">About Us</Link>
+          <Link href="/contact">Contact</Link>
           <Link href="/#products">Featured products</Link>
           <Link href="/#faq">Questions</Link>
           <Link href="/search?q=">Search products</Link>
@@ -149,7 +142,7 @@ export function Footer() {
           <p><a href={"tel:" + SITE.phone.replace(/\s/g, "")}>Phone: {SITE.phone}</a></p>
           <p><a href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp: {SITE.phone}</a></p>
           <p><a href="mailto:adnandisnie@gmail.com"><span aria-hidden="true">✉️</span> Email: adnandisnie@gmail.com</a></p>
-          <a className="instagram-link" href="https://www.instagram.com/adnanhousehold?evlk=aG55Y2RlMjYxaWw0&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Visit Adnan Electronics on Instagram">
+          <a className="instagram-link" href={SITE.instagram} target="_blank" rel="noopener noreferrer" aria-label="Visit Adnan Electronics on Instagram">
             <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
               <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8" />
               <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />

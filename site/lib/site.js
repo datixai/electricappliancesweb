@@ -5,6 +5,8 @@ export const SITE = {
   tagline: "Quality kitchen appliances you can trust",
   whatsapp: "971554629676",
   phone: "+971 55 462 9676",
+  email: "adnandisnie@gmail.com",
+  instagram: "https://www.instagram.com/adnanhousehold?evlk=aG55Y2RlMjYxaWw0&utm_source=qr",
   address: "Shop No. 29, Fikri Building, Deira, Dubai, UAE",
 };
 

@@ -1,15 +1,14 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CATEGORIES } from "@/lib/site";
 
-// Category menu that highlights only the page the visitor is on.
 export default function NavLinks() {
   const path = usePathname() || "/";
   const links = [
     { href: "/", label: "Home" },
-    { href: "/shop", label: "Shop all" },
-    ...CATEGORIES.map((c) => ({ href: `/category/${c.slug}`, label: c.name })),
+    { href: "/shop", label: "Shop All" },
+    { href: "/about", label: "About Us" },
+    { href: "/contact", label: "Contact" },
   ];
   return links.map((l) => {
     const active = l.href === "/" ? path === "/" : path === l.href || path.startsWith(l.href + "/");

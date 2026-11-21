@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getProducts } from "@/lib/store";
 import { CATEGORIES } from "@/lib/site";
-import { CategoryMosaic, ProductCard } from "@/components/ui";
+import { CategoryMosaic } from "@/components/ui";
+import ShopFilters from "./ShopFilters";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -24,14 +25,14 @@ export default async function Shop() {
 
       <section className="wrap section" id="all">
         <div className="section-heading">
-          <div><span className="section-kicker">{products.length} products</span><h2>All products</h2></div>
+          <div><span className="section-kicker">The complete collection</span><h2>All products</h2></div>
           <div className="chips">
             {CATEGORIES.map((c) => (
               <Link key={c.slug} href={`/category/${c.slug}`} className="chip-link">{c.name} <span>{counts[c.slug]}</span></Link>
             ))}
           </div>
         </div>
-        <div className="grid">{products.map((p) => <ProductCard key={p.id} p={p} />)}</div>
+        <ShopFilters products={products} />
       </section>
     </>
   );
