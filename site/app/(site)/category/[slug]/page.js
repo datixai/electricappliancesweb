@@ -9,7 +9,9 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const cat = CATEGORIES.find((c) => c.slug === slug);
-  return { title: cat ? `${cat.name} | Adnan Electronics Household` : "Category" };
+  if (!cat) return { title: "Category | Adnan Electronics Household" };
+  const description = `${cat.name} in Dubai from Adnan Electronics Household: ${cat.blurb.toLowerCase()}. Original products with warranty, delivery across the UAE and GCC.`;
+  return { title: `${cat.name} | Adnan Electronics Household`, description, alternates: { canonical: `/category/${slug}` }, openGraph: { title: cat.name, description, url: `/category/${slug}`, images: [{ url: cat.img, alt: cat.name }] } };
 }
 
 export default async function Category({ params }) {

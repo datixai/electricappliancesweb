@@ -6,6 +6,7 @@ import ShopFilters from "./ShopFilters";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
+  alternates: { canonical: "/shop" },
   title: "Shop all categories | Adnan Electronics Household",
   description: "Browse every Adnan Electronics category: air fryers, blenders, choppers, juicers, spice grinders, stoves, kettles and tea makers.",
 };

@@ -1,5 +1,7 @@
 export const SITE = {
   name: "Adnan Electronics Household",
+  // Public address of the live site (set NEXT_PUBLIC_SITE_URL on the host when the domain is final).
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://sliverscriest.com").replace(/\/$/, ""),
   nameFa: "لوازم خانگی",
   company: "Adnan Electronics Household",
   tagline: "Quality kitchen appliances you can trust",

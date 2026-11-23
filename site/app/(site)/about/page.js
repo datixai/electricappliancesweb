@@ -3,6 +3,7 @@ import { PageHero } from "@/components/ui";
 import { SITE } from "@/lib/site";
 
 export const metadata = {
+  alternates: { canonical: "/about" },
   title: "About Us | Adnan Electronics Household",
   description: "Learn about Adnan Electronics Household, kitchen appliances, customer support and UAE and GCC delivery.",
 };
