@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Adnan Electronics Household",
   nameFa: "لوازم خانگی",
-  company: "Disnie Electronics Trading LLC",
+  company: "Adnan Electronics Household",
   tagline: "Quality kitchen appliances you can trust",
   whatsapp: "971554629676",
   phone: "+971 55 462 9676",

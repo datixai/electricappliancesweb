@@ -3,6 +3,8 @@ import { ProductCard } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "Search | Adnan Electronics Household" };
+
 export default async function Search({ searchParams }) {
   const q = ((await searchParams).q || "").toString().trim().toLowerCase();
   const list = (await getProducts()).filter((p) =>

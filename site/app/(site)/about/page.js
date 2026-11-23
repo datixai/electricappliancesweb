@@ -21,8 +21,8 @@ export default function About() {
         <div className="about-copy">
           <span className="section-kicker">Adnan Electronics Household</span>
           <h2>Kitchen essentials, with helpful service</h2>
-          <p>{SITE.name} is the retail name of {SITE.company}, based in Deira, Dubai. The range includes air fryers, blenders, choppers, juicers, spice grinders, stoves, kettles and tea makers for home and business kitchens.</p>
-          <p>Product pages share the available brand, model, images and specifications. The store describes its products as original and supplied with warranty. For questions about a product or its details, contact the team directly before ordering.</p>
+          <p>{SITE.name} is a kitchen appliance shop in Deira, Dubai. The range includes air fryers, blenders, choppers, juicers, spice grinders, stoves, kettles and tea makers for home and business kitchens.</p>
+          <p>Every product page shows the brand, model, photos and key features. All products are original and come with warranty. If you have a question about a product, contact our team before ordering and we will help you choose.</p>
           <Link className="about-cta" href="/shop">Explore the collection</Link>
         </div>
         <figure className="about-visual">
@@ -34,7 +34,7 @@ export default function About() {
       <section className="why-section">
         <div className="wrap section">
           <div className="sec-head section-heading">
-            <div><span className="section-kicker">A considered choice</span><h2>Why Adnan Electronics</h2></div>
+            <div><span className="section-kicker">A considered choice</span><h2>Why Adnan Electronics Household</h2></div>
             <p>Helpful product information and a team ready to assist.</p>
           </div>
           <div className="why-grid">

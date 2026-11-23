@@ -102,7 +102,7 @@ export default function AdminPanel({ products, categories }) {
   return (
     <div className="ad">
       <header className="ad-top">
-        <div className="ad-brand"><Emblem size={38} /><div><b>Adnan Electronics</b><span>Admin panel</span></div></div>
+        <div className="ad-brand"><Emblem size={38} /><div><b>Adnan Electronics Household</b><span>Admin panel</span></div></div>
         <div className="ad-top-actions">
           <a href="/" target="_blank" rel="noopener" className="ad-btn ghost">View website</a>
           <button onClick={logout} className="ad-btn ghost">Log out</button>

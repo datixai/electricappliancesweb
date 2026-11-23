@@ -16,6 +16,12 @@ function specIcon(spec) {
   return "✓";
 }
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const p = (await getProducts()).find((x) => x.id === id);
+  return { title: p ? `${p.name} | Adnan Electronics Household` : "Product | Adnan Electronics Household", description: p?.description };
+}
+
 export default async function Product({ params }) {
   const { id } = await params;
   const all = await getProducts();

@@ -82,7 +82,8 @@ export function Footer() {
           <Link href="/about">About Us</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/#products">Featured products</Link>
-          <Link href="/#faq">Questions</Link>
+          <Link href="/about">About us</Link>
+          <Link href="/contact">Contact</Link>
           <Link href="/search?q=">Search products</Link>
         </div>
         <div>
@@ -90,8 +91,8 @@ export function Footer() {
           <p>{SITE.address}</p>
           <p><a href={"tel:" + SITE.phone.replace(/\s/g, "")}>Phone: {SITE.phone}</a></p>
           <p><a href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp: {SITE.phone}</a></p>
-          <p><a href="mailto:adnandisnie@gmail.com"><span aria-hidden="true">✉️</span> Email: adnandisnie@gmail.com</a></p>
-          <a className="instagram-link" href={SITE.instagram} target="_blank" rel="noopener noreferrer" aria-label="Visit Adnan Electronics on Instagram">
+          <p><a href={"mailto:" + SITE.email}>Email: {SITE.email}</a></p>
+          <a className="instagram-link" href={SITE.instagram} target="_blank" rel="noopener noreferrer" aria-label={"Visit " + SITE.name + " on Instagram"}>
             <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
               <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8" />
               <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />

@@ -3,7 +3,7 @@ import { SITE, waLink } from "@/lib/site";
 
 export const metadata = {
   title: "Get in Touch | Adnan Electronics Household",
-  description: "Contact Disnie Electronics Trading LLC in Deira, Dubai about kitchen appliances, wholesale inquiries, warranty or support.",
+  description: "Contact Adnan Electronics Household in Deira, Dubai about kitchen appliances, wholesale inquiries, warranty or support.",
 };
 
 export default function Contact() {
