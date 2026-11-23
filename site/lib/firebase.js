@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 
 let cached;
+export let lastError = null;
 
 // Accepts the JSON as pasted into Vercel: plain, wrapped in quotes, or base64.
 function parseAccount(raw) {
@@ -40,6 +41,7 @@ export async function fb() {
   } catch (e) {
     // Do not take the whole site down for a bad key: public pages fall back to the bundled products.
     console.error("Firebase setup failed:", e.message);
+    lastError = { name: e.name, code: e.code || null, step: e.step || null, message: e.name === "SyntaxError" ? "invalid JSON" : String(e.message).slice(0, 160) };
     return null;
   }
 }

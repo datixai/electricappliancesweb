@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fb } from "@/lib/firebase";
+import * as FB from "@/lib/firebase";
 
 export const dynamic = "force-dynamic";
 
@@ -15,8 +15,9 @@ export async function GET() {
     firebaseConnected: false,
     firestoreRead: false,
   };
-  const f = await fb();
+  const f = await FB.fb();
   out.firebaseConnected = Boolean(f);
+  if (!f && FB.lastError) out.error = FB.lastError;
   if (f) {
     try {
       await f.db.collection("products").limit(1).get();
