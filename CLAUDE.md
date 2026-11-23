@@ -26,7 +26,7 @@ Scope, domain risk and the quote: docs/analysis.md. Chat notes: docs/client_chat
 
 ## How it works
 - Data: Firebase project adnanelectronics-69f17 (free Spark plan). Products in Firestore collection "products" (sorted by "order"), admin photos in collection "images" (resized in the browser to under 700 KB, served by /api/img/<id>), since Spark has no Cloud Storage. Seed photos stay in public/products. Without Firebase keys the site falls back to site/data/products.json and data/uploads (local dev). Code: lib/firebase.js, lib/store.js, scripts/seed-firestore.mjs (copies products.json into Firestore once).
-- Admin login: email + password via Firebase Authentication (REST signInWithPassword, then a Firebase session cookie). Only ADMIN_EMAIL (adnandisnie@gmail.com) is accepted. "Forgot password" sends a Firebase reset email. Env: ADMIN_EMAIL, FIREBASE_API_KEY, FIREBASE_SERVICE_ACCOUNT (one-line JSON on Vercel) or site/firebase-service-account.json locally (gitignored). ADMIN_PASSWORD is only the local fallback.
+- Admin login: email + password via Firebase Authentication (REST signInWithPassword, then a Firebase session cookie). Only ADMIN_EMAIL (m.adnan.ali113@gmail.com) is accepted. "Forgot password" sends a Firebase reset email. Env: ADMIN_EMAIL, FIREBASE_API_KEY, FIREBASE_SERVICE_ACCOUNT (one-line JSON on Vercel) or site/firebase-service-account.json locally (gitignored). ADMIN_PASSWORD is only the local fallback.
 - Hosted on Vercel at https://adnanhomestore.com (GoDaddy DNS: A @ 216.198.79.1). Set NEXT_PUBLIC_SITE_URL=https://adnanhomestore.com on Vercel.
 - Contact settings (WhatsApp number, phone, email, Instagram, address and categories): site/lib/site.js.
 

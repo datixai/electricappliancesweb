@@ -28,4 +28,4 @@ export async function fb() {
   return cached;
 }
 
-export const ADMIN_EMAIL = () => (process.env.ADMIN_EMAIL || "adnandisnie@gmail.com").trim().toLowerCase();
+export const ADMIN_EMAIL = () => (process.env.ADMIN_EMAIL || "m.adnan.ali113@gmail.com").trim().toLowerCase();
