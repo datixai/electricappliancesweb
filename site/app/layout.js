@@ -14,7 +14,7 @@ export const metadata = {
   title: "Adnan Electronics Household | Kitchen Appliances in Dubai",
   description: DESCRIPTION,
   applicationName: SITE.name,
-  keywords: ["Adnan Electronics Household", "kitchen appliances Dubai", "air fryer Dubai", "blender Dubai", "meat chopper", "slow juicer", "spice grinder", "gas stove", "electric kettle", "tea maker", "Deira", "UAE", "GCC", "لوازم خانگی"],
+  keywords: ["Adnan Electronics Household", "kitchen appliances Dubai", "air fryer Dubai", "blender Dubai", "meat chopper", "slow juicer", "spice grinder", "gas stove", "electric kettle", "tea maker", "Deira", "UAE", "GCC", "لوازم خانگی", "لوازم خانگی دبئی", "kitchen appliances Deira Dubai", "home appliances UAE", "kitchen appliances wholesale Dubai"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -27,6 +27,8 @@ export const metadata = {
   },
   twitter: { card: "summary_large_image", title: SITE.name, description: DESCRIPTION, images: ["/brand/logo-horizontal.png"] },
   robots: { index: true, follow: true },
+  verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
+  other: { "geo.region": "AE-DU", "geo.placename": "Deira, Dubai" },
   formatDetection: { telephone: true, email: true, address: true },
 };
 

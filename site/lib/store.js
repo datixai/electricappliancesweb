@@ -59,9 +59,9 @@ export async function deleteProduct(id) {
   }
   const ref = f.db.collection("products").doc(id);
   const snap = await ref.get();
-  const imgs = (snap.data()?.images || []).filter((u) => u.startsWith("/api/img/"));
+  const imgs = snap.data()?.images || [];
   await ref.delete();
-  await Promise.all(imgs.map((u) => f.db.collection("images").doc(u.split("/").pop()).delete().catch(() => {})));
+  await deleteImages(imgs);
 }
 
 // ---------- Photos ----------
@@ -80,6 +80,18 @@ export async function saveImage(buf, type) {
     await f.db.collection("images").doc(name).set({ type, data: buf, createdAt: Date.now() });
   }
   return "/api/img/" + name;
+}
+
+// Delete uploaded photos by url (bundled seed photos under /products are never touched).
+export async function deleteImages(urls) {
+  const names = (urls || []).filter((u) => /^\/api\/img\/[a-f0-9]{16}$/.test(u)).map((u) => u.split("/").pop());
+  const f = await fb();
+  if (!f) {
+    const dir = path.join(DATA, "uploads");
+    await Promise.all(names.flatMap((n) => [fs.rm(path.join(dir, n), { force: true }), fs.rm(path.join(dir, n + ".type"), { force: true })]));
+    return;
+  }
+  await Promise.all(names.map((n) => f.db.collection("images").doc(n).delete().catch(() => {})));
 }
 
 export async function readImage(name) {

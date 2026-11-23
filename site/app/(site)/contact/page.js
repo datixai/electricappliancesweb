@@ -3,7 +3,7 @@ import { SITE, waLink } from "@/lib/site";
 
 export const metadata = {
   alternates: { canonical: "/contact" },
-  title: "Get in Touch | Adnan Electronics Household",
+  title: "Contact Us, Deira Dubai | Adnan Electronics Household",
   description: "Contact Adnan Electronics Household in Deira, Dubai about kitchen appliances, wholesale inquiries, warranty or support.",
 };
 

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
   if (!p) return { title: "Product | Adnan Electronics Household" };
   const description = `${p.name}${p.model ? " (" + p.model + ")" : ""} from Adnan Electronics Household, Dubai. ${p.description || ""}`.trim();
   return {
-    title: `${p.name} | Adnan Electronics Household`,
+    title: `${p.name} in Dubai | Adnan Electronics Household`,
     description,
     alternates: { canonical: `/product/${p.id}` },
     openGraph: { title: p.name, description, url: `/product/${p.id}`, images: p.images?.[0] ? [{ url: p.images[0], alt: p.name }] : undefined },

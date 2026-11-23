@@ -1,14 +1,14 @@
 export const SITE = {
   name: "Adnan Electronics Household",
   // Public address of the live site (set NEXT_PUBLIC_SITE_URL on the host when the domain is final).
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://sliverscriest.com").replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://adnanhomestore.com").replace(/\/$/, ""),
   nameFa: "لوازم خانگی",
   company: "Adnan Electronics Household",
   tagline: "Quality kitchen appliances you can trust",
   whatsapp: "971554629676",
   phone: "+971 55 462 9676",
   email: "adnandisnie@gmail.com",
-  instagram: "https://www.instagram.com/adnanhousehold?evlk=aG55Y2RlMjYxaWw0&utm_source=qr",
+  instagram: "https://www.instagram.com/adnanhousehold",
   address: "Shop No. 29, Fikri Building, Deira, Dubai, UAE",
 };
 

@@ -7,8 +7,8 @@ import ShopFilters from "./ShopFilters";
 export const dynamic = "force-dynamic";
 export const metadata = {
   alternates: { canonical: "/shop" },
-  title: "Shop all categories | Adnan Electronics Household",
-  description: "Browse every Adnan Electronics category: air fryers, blenders, choppers, juicers, spice grinders, stoves, kettles and tea makers.",
+  title: "Kitchen Appliances in Dubai: Shop All | Adnan Electronics Household",
+  description: "Shop kitchen appliances in Dubai: air fryers, blenders, choppers, juicers, spice grinders, stoves, kettles and tea makers. Original products with warranty and delivery across the UAE and GCC.",
 };
 
 export default async function Shop() {

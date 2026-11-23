@@ -1,30 +1,17 @@
 import { NextResponse } from "next/server";
-import * as FB from "@/lib/firebase";
+import { fb } from "@/lib/firebase";
 
 export const dynamic = "force-dynamic";
 
-// Shows whether Firebase is connected. Never prints any secret value.
+// Public status check. Only says whether Firebase is connected, nothing else.
 export async function GET() {
-  const raw = process.env.FIREBASE_SERVICE_ACCOUNT || "";
-  const out = {
-    keySet: Boolean(raw),
-    keyLength: raw.length,
-    keyStartsWith: raw.trim().charAt(0) || null,
-    apiKeySet: Boolean(process.env.FIREBASE_API_KEY),
-    adminEmailSet: Boolean(process.env.ADMIN_EMAIL),
-    firebaseConnected: false,
-    firestoreRead: false,
-  };
-  const f = await FB.fb();
-  out.firebaseConnected = Boolean(f);
-  if (!f && FB.lastError) out.error = FB.lastError;
+  const f = await fb();
+  let ok = false;
   if (f) {
     try {
       await f.db.collection("products").limit(1).get();
-      out.firestoreRead = true;
-    } catch (e) {
-      out.firestoreError = e.code || e.name;
-    }
+      ok = true;
+    } catch {}
   }
-  return NextResponse.json(out, { headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json({ firebase: ok }, { status: ok ? 200 : 503, headers: { "Cache-Control": "no-store" } });
 }
