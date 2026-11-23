@@ -1,24 +1,18 @@
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
 import crypto from "crypto";
-import { getProducts, saveProducts, isAdmin, UPLOADS } from "@/lib/store";
+import { isAdmin, upsertProduct, deleteProduct, saveImage, getProducts } from "@/lib/store";
 import { CATEGORIES } from "@/lib/site";
 
-const TYPES = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp" };
-const MAX = 8 * 1024 * 1024;
+const TYPES = ["image/jpeg", "image/png", "image/webp"];
+const MAX = 900 * 1024; // photos are resized in the browser first; Firestore allows 1 MB per document
 const deny = () => NextResponse.json({ error: "Not allowed" }, { status: 401 });
 
 async function saveImages(files) {
-  await fs.mkdir(UPLOADS, { recursive: true });
   const urls = [];
   for (const f of files) {
     if (!f || typeof f === "string" || !f.size) continue;
-    const ext = TYPES[f.type];
-    if (!ext || f.size > MAX) throw new Error("Photos must be JPG, PNG or WEBP under 8 MB");
-    const name = crypto.randomBytes(8).toString("hex") + ext;
-    await fs.writeFile(path.join(UPLOADS, name), Buffer.from(await f.arrayBuffer()));
-    urls.push("/api/img/" + name);
+    if (!TYPES.includes(f.type) || f.size > MAX) throw new Error("A photo is too large or not JPG, PNG or WEBP.");
+    urls.push(await saveImage(Buffer.from(await f.arrayBuffer()), f.type));
   }
   return urls;
 }
@@ -36,9 +30,8 @@ export async function POST(req) {
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 400 });
   }
-  const list = await getProducts();
   const id = s("id");
-  const keep = fd.getAll("keep").map(String);
+  if (id && !(await getProducts()).some((p) => p.id === id)) return NextResponse.json({ error: "Not found" }, { status: 404 });
   const data = {
     name: s("name"),
     model: s("model"),
@@ -48,22 +41,15 @@ export async function POST(req) {
     description: s("description"),
     specs: s("specs").split("\n").map((x) => x.trim()).filter(Boolean),
     featured: s("featured") === "on",
+    images: [...fd.getAll("keep").map(String), ...newImgs],
   };
-  if (id) {
-    const i = list.findIndex((p) => p.id === id);
-    if (i < 0) return NextResponse.json({ error: "Not found" }, { status: 404 });
-    list[i] = { ...list[i], ...data, images: [...keep, ...newImgs] };
-  } else {
-    list.unshift({ id: crypto.randomBytes(4).toString("hex"), ...data, images: newImgs });
-  }
-  await saveProducts(list);
+  await upsertProduct(id || crypto.randomBytes(4).toString("hex"), data);
   return NextResponse.json({ ok: true });
 }
 
 export async function DELETE(req) {
   if (!(await isAdmin())) return deny();
   const id = new URL(req.url).searchParams.get("id");
-  const list = await getProducts();
-  await saveProducts(list.filter((p) => p.id !== id));
+  if (id) await deleteProduct(id);
   return NextResponse.json({ ok: true });
 }

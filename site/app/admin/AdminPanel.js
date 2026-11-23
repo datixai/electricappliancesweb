@@ -7,15 +7,26 @@ export function Login() {
   const router = useRouter();
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  const [note, setNote] = useState("");
+  const call = (body) => fetch("/api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   async function submit(e) {
     e.preventDefault();
     setBusy(true);
     setErr("");
-    const password = new FormData(e.target).get("password");
-    const r = await fetch("/api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password }) });
+    setNote("");
+    const fd = new FormData(e.target);
+    const r = await call({ email: fd.get("email"), password: fd.get("password") });
     setBusy(false);
     if (r.ok) router.refresh();
-    else setErr("Wrong password. Please try again.");
+    else setErr("Wrong email or password. Please try again.");
+  }
+  async function forgot(e) {
+    const email = e.target.form.email.value.trim();
+    setErr("");
+    if (!email) return setErr("Type the admin email first.");
+    const r = await call({ email, reset: true });
+    if (r.ok) setNote("A password reset link has been sent to " + email + ".");
+    else setErr("Could not send a reset link for this email.");
   }
   return (
     <div className="ad-login">
@@ -23,13 +34,35 @@ export function Login() {
         <Emblem size={64} />
         <h1>Admin panel</h1>
         <p>Adnan Electronics Household</p>
-        <label>Password<input type="password" name="password" required autoFocus autoComplete="current-password" /></label>
+        <label>Email<input type="email" name="email" required autoFocus autoComplete="username" /></label>
+        <label>Password<input type="password" name="password" required autoComplete="current-password" /></label>
         <button className="ad-btn gold" disabled={busy}>{busy ? "Checking..." : "Log in"}</button>
+        <button type="button" className="ad-forgot" onClick={forgot}>Forgot password?</button>
         {err && <p className="ad-err">{err}</p>}
+        {note && <p className="ad-note">{note}</p>}
         <a href="/" className="ad-back">Back to website</a>
       </form>
     </div>
   );
+}
+
+// Resize a photo in the browser to max 1400 px and JPEG, so it stays well under 1 MB.
+async function shrink(file) {
+  const bmp = await createImageBitmap(file);
+  let side = 1400;
+  for (let q = 0.85; ; q -= 0.1) {
+    const scale = Math.min(1, side / Math.max(bmp.width, bmp.height));
+    const cv = document.createElement("canvas");
+    cv.width = Math.round(bmp.width * scale);
+    cv.height = Math.round(bmp.height * scale);
+    const cx = cv.getContext("2d");
+    cx.fillStyle = "#fff";
+    cx.fillRect(0, 0, cv.width, cv.height);
+    cx.drawImage(bmp, 0, 0, cv.width, cv.height);
+    const blob = await new Promise((r) => cv.toBlob(r, "image/jpeg", q));
+    if (blob.size < 700 * 1024 || q < 0.5) return blob;
+    side = Math.round(side * 0.8);
+  }
 }
 
 const EMPTY = { id: "", name: "", model: "", brand: "", category: "", price: "", description: "", specs: [], images: [], featured: false };
@@ -76,6 +109,14 @@ export default function AdminPanel({ products, categories }) {
     setMsg(null);
     const fd = new FormData(e.target);
     keep.forEach((k) => fd.append("keep", k));
+    const files = fd.getAll("images").filter((f) => f && f.size);
+    fd.delete("images");
+    try {
+      for (const f of files) fd.append("images", await shrink(f), "photo.jpg");
+    } catch {
+      setBusy(false);
+      return setMsg({ ok: false, text: "One of the photos could not be read. Please use a JPG, PNG or WEBP photo." });
+    }
     const r = await fetch("/api/products", { method: "POST", body: fd });
     const j = await r.json().catch(() => ({}));
     setBusy(false);
@@ -155,7 +196,7 @@ export default function AdminPanel({ products, categories }) {
                   <b>+</b><span>Add photos</span>
                 </label>
               </div>
-              <small>JPG, PNG or WEBP, up to 8 MB each. The first photo is the main one.</small>
+              <small>JPG, PNG or WEBP, any size (resized automatically). The first photo is the main one.</small>
             </div>
 
             <label className="ad-check"><input type="checkbox" name="featured" defaultChecked={edit.featured} /> Show in Best sellers on the home page</label>

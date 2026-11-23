@@ -6,6 +6,8 @@
 .ad-login-card label { width: 100%; text-align: left; }
 .ad-login-card .ad-btn { width: 100%; }
 .ad-err { margin: 0; color: #c0262d; font-size: 14px; }
+.ad-note { margin: 0; color: #1d7a46; font-size: 14px; }
+.ad-forgot { background: none; border: 0; color: #5b6678; font-size: 13px; cursor: pointer; text-decoration: underline; padding: 0; }
 .ad-back { font-size: 13px; color: var(--muted); }
 .ad-back:hover { color: var(--navy); }
 
