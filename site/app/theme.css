@@ -434,3 +434,19 @@ h1, h2, .display { font-family: var(--display); letter-spacing: -.01em; }
   .contact-intro, .contact-layout { animation: none; }
   .contact-field input, .contact-field select, .contact-field textarea, .contact-submit, .contact-info-list a { transition: none; }
 }
+
+/* Category tiles for any number of categories other than the designed 7 */
+.mosaic-auto { height: auto; grid-template-areas: none; grid-template-columns: repeat(3, 1fr); grid-template-rows: none; }
+.mosaic-auto .mtile { grid-area: auto !important; height: 320px; }
+.mosaic-auto .mtile:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
+.mosaic-auto .mtile:last-child:nth-child(3n + 2) { grid-column: span 2; }
+@media (max-width: 900px) {
+  .mosaic-auto { grid-template-columns: repeat(2, 1fr); }
+  .mosaic-auto .mtile { height: 300px; }
+  .mosaic-auto .mtile:last-child:nth-child(3n + 2) { grid-column: auto; }
+  .mosaic-auto .mtile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .mosaic-auto { grid-template-columns: 1fr; }
+  .mosaic-auto .mtile, .mosaic-auto .mtile:last-child { grid-column: auto !important; height: 260px; }
+}

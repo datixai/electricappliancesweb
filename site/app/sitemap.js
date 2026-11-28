@@ -1,12 +1,12 @@
-import { getProducts } from "@/lib/store";
-import { SITE, CATEGORIES } from "@/lib/site";
+import { getProducts, getCategories } from "@/lib/store";
+import { SITE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
 export default async function sitemap() {
   const now = new Date();
   const page = (path, priority, changeFrequency = "weekly") => ({ url: SITE.url + path, lastModified: now, changeFrequency, priority });
-  const products = await getProducts();
+  const [products, CATEGORIES] = await Promise.all([getProducts(), getCategories()]);
   return [
     page("/", 1, "daily"),
     page("/shop", 0.9, "daily"),

@@ -12,7 +12,8 @@ export const SITE = {
   address: "Shop No. 29, Fikri Building, Deira, Dubai, UAE",
 };
 
-export const CATEGORIES = [
+// Starting categories. The admin can add, rename and remove categories; the live list is in Firebase.
+export const DEFAULT_CATEGORIES = [
   { slug: "air-fryers", name: "Air Fryers", img: "/products/p1.jpg", blurb: "Crispy food with up to 80% less oil" },
   { slug: "blenders", name: "Blenders", img: "/products/p20.jpg", blurb: "Smoothies, shakes and grinding" },
   { slug: "choppers", name: "Choppers", img: "/products/p5.jpg", blurb: "Meat, onion and vegetable choppers" },
@@ -21,8 +22,6 @@ export const CATEGORIES = [
   { slug: "stoves", name: "Stoves", img: "/products/p28.jpg", blurb: "Gas stoves and ceramic cookers" },
   { slug: "kettles", name: "Kettles and Tea Makers", img: "/products/p41.jpg", blurb: "Smart boiling, perfect tea" },
 ];
-
-export const catName = (slug) => CATEGORIES.find((c) => c.slug === slug)?.name || slug;
 
 export const waLink = (text) =>
   `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text || "Hello, I want to ask about your products.")}`;

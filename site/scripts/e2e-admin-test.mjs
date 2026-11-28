@@ -131,6 +131,65 @@ try {
   ok("deleting the same id again is harmless (200)", (await api("/api/products?id=" + p1.id, { method: "DELETE", cookie: admin })).status === 200);
   ok("the 29 original products are still there", (await db.collection("products").get()).size === 29);
 
+  console.log("\n== Categories (add, edit, use, delete) ==");
+  const CN = "ZZ Test Category " + Date.now();
+  const catForm = (o, file) => { const f = new FormData(); for (const [k, v] of Object.entries(o)) f.append(k, v); if (file) f.append("image", file); return f; };
+  const catDocs = async () => (await db.collection("categories").get()).docs.map((d) => ({ slug: d.id, ...d.data() }));
+  const before = (await catDocs()).length;
+  ok("add category without login is refused (401)", (await api("/api/categories", { method: "POST", body: catForm({ name: CN }, png()) })).status === 401);
+  ok("add category with another Firebase user is refused (401)", (await api("/api/categories", { method: "POST", cookie: other, body: catForm({ name: CN }, png()) })).status === 401);
+  ok("add category from another website is refused (403)", (await api("/api/categories", { method: "POST", cookie: admin, origin: "https://evil.example", body: catForm({ name: CN }, png()) })).status === 403);
+  ok("delete category without login is refused (401)", (await api("/api/categories?slug=kettles", { method: "DELETE" })).status === 401);
+  r = await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ name: CN }) });
+  ok("a new category needs a photo (400)", r.status === 400);
+  r = await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ name: CN }, new File(["<svg onload=alert(1)>"], "x.png", { type: "image/png" })) });
+  ok("fake category photo is refused (400)", r.status === 400);
+  r = await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ name: "  " }, png()) });
+  ok("empty category name is refused (400)", r.status === 400);
+  r = await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ name: CN, blurb: "Test blurb" }, png()) });
+  ok("admin can add a new category (200)", r.status === 200, r.status + " " + (await r.text()));
+  const cats1 = await catDocs();
+  const newCat = cats1.find((c) => c.name === CN);
+  ok("category is stored in Firestore with a clean web address", !!newCat && /^zz-test-category-\d+$/.test(newCat.slug), JSON.stringify(newCat));
+  ok("starting categories were kept (nothing lost)", cats1.length === Math.max(before, 7) + 1 && ["air-fryers", "kettles", "stoves"].every((x) => cats1.some((c) => c.slug === x)), String(cats1.length));
+  ok("category photo is stored and served", newCat && (await imgDoc(newCat.img)) && (await api(newCat.img)).status === 200);
+  r = await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ name: CN.toUpperCase() }, png()) });
+  ok("duplicate category name is refused (400)", r.status === 400);
+  ok("new category page loads (200) and is on the shop page", (await api("/category/" + newCat.slug)).status === 200 && (await (await api("/shop")).text()).includes(CN));
+  const shopHtml = await (await api("/shop")).text();
+  ok("shop page shows 8 category tiles in the flexible grid", (shopHtml.match(/class="mtile /g) || []).length === 8 && shopHtml.includes("mosaic mosaic-auto"));
+  ok("new category is in the footer, sitemap and llms.txt", (await (await api("/")).text()).includes(CN) && (await (await api("/sitemap.xml")).text()).includes("/category/" + newCat.slug) && (await (await api("/llms.txt")).text()).includes(CN));
+  ok("category page for an unknown category is 404", (await api("/category/does-not-exist")).status === 404);
+
+  // use it for a product
+  r = await api("/api/products", { method: "POST", cookie: admin, body: form({ ...base, name: NAME + " IN NEW CAT", category: newCat.slug }, [png()]) });
+  ok("a product can be added to the new category (200)", r.status === 200, await r.text());
+  const [pc] = await findByName(NAME + " IN NEW CAT");
+  ok("product page shows the new category name", (await (await api("/product/" + pc.id)).text()).includes(CN));
+  ok("category page lists the product", (await (await api("/category/" + newCat.slug)).text()).includes(NAME + " IN NEW CAT"));
+
+  // rename keeps the web address
+  r = await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ slug: newCat.slug, name: CN + " RENAMED", blurb: "New blurb" }) });
+  const renamed = (await catDocs()).find((c) => c.slug === newCat.slug);
+  ok("rename keeps the same web address and photo (no new photo needed)", r.status === 200 && renamed.name === CN + " RENAMED" && renamed.img === newCat.img, r.status + " " + JSON.stringify(renamed));
+  ok("product page now shows the new name", (await (await api("/product/" + pc.id)).text()).includes(CN + " RENAMED"));
+  r = await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ slug: newCat.slug, name: CN + " RENAMED" }, png("c.png")) });
+  const swapped = (await catDocs()).find((c) => c.slug === newCat.slug);
+  ok("changing the category photo replaces it and removes the old one", r.status === 200 && swapped.img !== newCat.img && !(await imgDoc(newCat.img)) && (await imgDoc(swapped.img)));
+  ok("editing a category that does not exist is refused (404)", (await api("/api/categories", { method: "POST", cookie: admin, body: catForm({ slug: "nope", name: "x" }, png()) })).status === 404);
+
+  // delete rules
+  r = await api("/api/categories?slug=" + newCat.slug, { method: "DELETE", cookie: admin });
+  ok("a category that still has products cannot be deleted (400)", r.status === 400 && (await catDocs()).some((c) => c.slug === newCat.slug), String(r.status));
+  ok("delete from another website is refused (403)", (await api("/api/categories?slug=" + newCat.slug, { method: "DELETE", cookie: admin, origin: "https://evil.example" })).status === 403);
+  await api("/api/products?id=" + pc.id, { method: "DELETE", cookie: admin });
+  r = await api("/api/categories?slug=" + newCat.slug, { method: "DELETE", cookie: admin });
+  ok("after the products are gone the category can be deleted (200)", r.status === 200);
+  ok("category and its photo are gone from Firestore", !(await catDocs()).some((c) => c.slug === newCat.slug) && !(await imgDoc(swapped.img)));
+  ok("category page is 404 again and shop is back to 7 tiles", (await api("/category/" + newCat.slug)).status === 404 && ((await (await api("/shop")).text()).match(/class="mtile /g) || []).length === 7);
+  ok("deleting an unknown category is refused (404)", (await api("/api/categories?slug=nope", { method: "DELETE", cookie: admin })).status === 404);
+  ok("the 29 original products still exist", (await db.collection("products").get()).size === 29);
+
   console.log("\n== Login protection ==");
   const login = (b, o = BASE) => api("/api/login", { method: "POST", origin: o, body: JSON.stringify(b) });
   ok("login from another website is refused (403)", (await login({ email: ADMIN, password: "x" }, "https://evil.example")).status === 403);
@@ -159,6 +218,11 @@ try {
   }
 } finally {
   if (nonAdminUid) await auth.deleteUser(nonAdminUid).catch(() => {});
+  for (const d of (await db.collection("categories").get()).docs.filter((x) => String(x.data().name).startsWith("ZZ Test Category"))) {
+    await db.collection("images").doc(String(d.data().img).split("/").pop()).delete().catch(() => {});
+    await d.ref.delete();
+    console.log("cleaned leftover test category:", d.id);
+  }
   for (const col of ["products"]) {
     const left = (await db.collection(col).where("name", ">=", "ZZ TEST PRODUCT").where("name", "<=", "ZZ TEST PRODUCT").get()).docs;
     for (const d of left) await d.ref.delete();

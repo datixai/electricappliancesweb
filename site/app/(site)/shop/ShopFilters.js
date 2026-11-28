@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CATEGORIES } from "@/lib/site";
 import { ProductCard } from "@/components/ui";
 
 const SORT_OPTIONS = [
@@ -10,7 +9,7 @@ const SORT_OPTIONS = [
   { value: "name-desc", label: "Name: Z to A" },
 ];
 
-export default function ShopFilters({ products }) {
+export default function ShopFilters({ products, categories: CATEGORIES = [] }) {
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [sort, setSort] = useState("featured");

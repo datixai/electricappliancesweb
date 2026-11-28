@@ -1,8 +1,9 @@
 import { Header, Footer, WhatsAppFloat } from "@/components/ui";
 import JsonLd from "@/components/JsonLd";
-import { SITE, CATEGORIES } from "@/lib/site";
+import { getCategories } from "@/lib/store";
+import { SITE } from "@/lib/site";
 
-const storeSchema = {
+const storeSchema = (CATEGORIES) => ({
   "@context": "https://schema.org",
   "@type": "HomeGoodsStore",
   "@id": SITE.url + "/#store",
@@ -22,7 +23,7 @@ const storeSchema = {
     name: "Kitchen appliances",
     itemListElement: CATEGORIES.map((c) => ({ "@type": "OfferCatalog", name: c.name, url: `${SITE.url}/category/${c.slug}` })),
   },
-};
+});
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -32,13 +33,16 @@ const websiteSchema = {
   potentialAction: { "@type": "SearchAction", target: SITE.url + "/search?q={search_term_string}", "query-input": "required name=search_term_string" },
 };
 
-export default function SiteLayout({ children }) {
+export const dynamic = "force-dynamic";
+
+export default async function SiteLayout({ children }) {
+  const categories = await getCategories();
   return (
     <>
-      <JsonLd data={[storeSchema, websiteSchema]} />
+      <JsonLd data={[storeSchema(categories), websiteSchema]} />
       <Header />
       <main>{children}</main>
-      <Footer />
+      <Footer categories={categories} />
       <WhatsAppFloat />
     </>
   );

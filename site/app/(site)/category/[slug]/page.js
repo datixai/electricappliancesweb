@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProducts } from "@/lib/store";
-import { CATEGORIES, SITE } from "@/lib/site";
+import { getProducts, getCategories } from "@/lib/store";
+import { SITE } from "@/lib/site";
 import JsonLd from "@/components/JsonLd";
 import { CategoryMosaic, PageHero, ProductCard } from "@/components/ui";
 
@@ -9,6 +9,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const CATEGORIES = await getCategories();
   const cat = CATEGORIES.find((c) => c.slug === slug);
   if (!cat) return { title: "Category | Adnan Electronics Household" };
   const description = `${cat.name} in Dubai from Adnan Electronics Household: ${cat.blurb.toLowerCase()}. Original products with warranty, delivery across the UAE and GCC.`;
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Category({ params }) {
   const { slug } = await params;
+  const CATEGORIES = await getCategories();
   const cat = CATEGORIES.find((c) => c.slug === slug);
   if (!cat) notFound();
   const list = (await getProducts()).filter((p) => p.category === slug);
@@ -48,7 +50,7 @@ export default async function Category({ params }) {
           <div><span className="section-kicker">Keep exploring</span><h2>Other categories</h2></div>
           <Link href="/shop" className="link">View all categories</Link>
         </div>
-        <CategoryMosaic exclude={slug} />
+        <CategoryMosaic categories={CATEGORIES} exclude={slug} />
       </section>
     </>
   );

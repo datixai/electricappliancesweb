@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import { isAdmin, upsertProduct, deleteProduct, saveImage, deleteImages, getProducts } from "@/lib/store";
-import { CATEGORIES } from "@/lib/site";
+import { isAdmin, upsertProduct, deleteProduct, saveImage, deleteImages, getProducts, getCategories } from "@/lib/store";
 import { sameOrigin, sniffImage, SAFE_IMAGE, SAFE_ID } from "@/lib/security";
 
 const MAX = 900 * 1024; // photos are resized in the browser first; Firestore allows 1 MB per document
@@ -31,7 +30,7 @@ export async function POST(req) {
   const name = s("name", 150);
   if (!name) return bad("Name is required");
   const category = s("category", 40);
-  if (!CATEGORIES.some((c) => c.slug === category)) return bad("Choose a category");
+  if (!(await getCategories()).some((c) => c.slug === category)) return bad("Choose a category");
   const id = s("id", 40);
   if (id && !SAFE_ID.test(id)) return bad("Bad product id");
   const price = s("price", 20);

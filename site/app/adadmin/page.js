@@ -1,6 +1,5 @@
 import "./admin.css";
-import { getProducts, isAdmin } from "@/lib/store";
-import { CATEGORIES } from "@/lib/site";
+import { getProducts, getCategories, isAdmin } from "@/lib/store";
 import AdminPanel, { Login } from "./AdminPanel";
 
 export const dynamic = "force-dynamic";
@@ -8,5 +7,5 @@ export const metadata = { title: "Admin | Adnan Electronics Household", robots: 
 
 export default async function Admin() {
   if (!(await isAdmin())) return <Login />;
-  return <AdminPanel products={await getProducts()} categories={CATEGORIES} />;
+  return <AdminPanel products={await getProducts()} categories={await getCategories()} />;
 }

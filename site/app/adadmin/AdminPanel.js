@@ -76,6 +76,9 @@ export default function AdminPanel({ products, categories }) {
   const [busy, setBusy] = useState(false);
   const [filter, setFilter] = useState("");
   const [q, setQ] = useState("");
+  const [cat, setCat] = useState(null); // null = category form closed; {slug:""} = new; {slug:"x"} = editing
+  const [catPreview, setCatPreview] = useState("");
+  const [catBusy, setCatBusy] = useState(false);
 
   useEffect(() => () => previews.forEach((u) => URL.revokeObjectURL(u)), [previews]);
 
@@ -133,6 +136,46 @@ export default function AdminPanel({ products, categories }) {
     router.refresh();
   }
 
+  function openCat(c) {
+    setCat(c || { slug: "", name: "", blurb: "", img: "" });
+    setCatPreview("");
+    setMsg(null);
+    setTimeout(() => document.getElementById("cat-card")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+  }
+
+  async function saveCat(e) {
+    e.preventDefault();
+    setCatBusy(true);
+    setMsg(null);
+    const fd = new FormData(e.target);
+    const file = fd.get("image");
+    fd.delete("image");
+    if (file && file.size) {
+      try {
+        fd.append("image", await shrink(file), "category.jpg");
+      } catch {
+        setCatBusy(false);
+        return setMsg({ ok: false, text: "The photo could not be read. Please use a JPG, PNG or WEBP photo." });
+      }
+    }
+    const r = await fetch("/api/categories", { method: "POST", body: fd });
+    const j = await r.json().catch(() => ({}));
+    setCatBusy(false);
+    if (!r.ok) return setMsg({ ok: false, text: j.error || "Could not save the category. Please try again." });
+    setMsg({ ok: true, text: cat.slug ? "Category updated." : "Category added. It is now on the website and in the product list below." });
+    setCat(null);
+    setCatPreview("");
+    router.refresh();
+  }
+
+  async function removeCat(c) {
+    if (!confirm(`Delete the category "${c.name}"? This cannot be undone.`)) return;
+    const r = await fetch("/api/categories?slug=" + encodeURIComponent(c.slug), { method: "DELETE" });
+    const j = await r.json().catch(() => ({}));
+    setMsg(r.ok ? { ok: true, text: "Category deleted." } : { ok: false, text: j.error || "Could not delete the category." });
+    router.refresh();
+  }
+
   async function logout() {
     await fetch("/api/login", { method: "DELETE" });
     router.refresh();
@@ -160,6 +203,48 @@ export default function AdminPanel({ products, categories }) {
 
         {msg && <p className={"ad-msg " + (msg.ok ? "ok" : "bad")}>{msg.text}</p>}
 
+        <section className="ad-card ad-cats" id="cat-card">
+          <div className="ad-card-head">
+            <h2>Categories <span>{categories.length}</span></h2>
+            {!cat && <button type="button" className="ad-btn gold sm" onClick={() => openCat()}>+ New category</button>}
+          </div>
+          {cat && (
+            <form key={cat.slug || "new"} className="ad-catform" onSubmit={saveCat}>
+              <h3>{cat.slug ? "Edit category" : "Add a new category"}</h3>
+              <input type="hidden" name="slug" defaultValue={cat.slug} />
+              <div className="ad-2">
+                <label>Category name *<input name="name" defaultValue={cat.name} required maxLength={60} placeholder="e.g. Coffee Machines" /></label>
+                <label>Short description<input name="blurb" defaultValue={cat.blurb} maxLength={120} placeholder="e.g. Espresso and drip coffee makers" /></label>
+              </div>
+              <div className="ad-catphoto">
+                {(catPreview || cat.img) && <img src={catPreview || cat.img} alt="" />}
+                <label className="ad-btn ghost dark sm">
+                  {cat.img || catPreview ? "Change photo" : "+ Add photo *"}
+                  <input type="file" name="image" accept="image/jpeg,image/png,image/webp" hidden onChange={(e) => { const f = e.target.files[0]; setCatPreview(f ? URL.createObjectURL(f) : ""); }} />
+                </label>
+                <small>This photo is shown on the shop page tile and the category page banner. A wide photo works best.</small>
+              </div>
+              <div className="ad-actions">
+                <button className="ad-btn gold" disabled={catBusy}>{catBusy ? "Saving..." : cat.slug ? "Save category" : "Add category"}</button>
+                <button type="button" className="ad-btn ghost dark" onClick={() => { setCat(null); setCatPreview(""); }}>Cancel</button>
+              </div>
+            </form>
+          )}
+          <div className="ad-catlist">
+            {categories.map((c) => (
+              <div key={c.slug} className="ad-catrow">
+                <img src={c.img} alt="" />
+                <div className="ad-row-info"><b>{c.name}</b><span>{counts[c.slug]} product{counts[c.slug] === 1 ? "" : "s"}</span></div>
+                <div className="ad-row-actions">
+                  <a href={`/category/${c.slug}`} target="_blank" rel="noopener" className="ad-link">View</a>
+                  <button type="button" className="ad-btn ghost dark sm" onClick={() => openCat(c)}>Edit</button>
+                  <button type="button" className="ad-btn danger sm" onClick={() => removeCat(c)}>Delete</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <div className="ad-main">
           <form key={edit.id || "new"} className="ad-card ad-form" onSubmit={save}>
             <div className="ad-card-head">
@@ -168,7 +253,7 @@ export default function AdminPanel({ products, categories }) {
             </div>
             <input type="hidden" name="id" defaultValue={edit.id} />
             <label>Product name *<input name="name" defaultValue={edit.name} required placeholder="e.g. Silver Crest 16L Air Fryer" /></label>
-            <label>Category *
+            <label>Category * <button type="button" className="ad-link" onClick={() => openCat()}>+ New category</button>
               <select name="category" defaultValue={edit.category} required>
                 <option value="">Choose a category</option>
                 {categories.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}

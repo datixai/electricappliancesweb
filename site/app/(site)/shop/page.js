@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { getProducts } from "@/lib/store";
-import { CATEGORIES } from "@/lib/site";
+import { getProducts, getCategories } from "@/lib/store";
 import { CategoryMosaic } from "@/components/ui";
 import ShopFilters from "./ShopFilters";
 
@@ -12,17 +11,17 @@ export const metadata = {
 };
 
 export default async function Shop() {
-  const products = await getProducts();
+  const [products, CATEGORIES] = await Promise.all([getProducts(), getCategories()]);
   const counts = Object.fromEntries(CATEGORIES.map((c) => [c.slug, products.filter((p) => p.category === c.slug).length]));
   return (
     <>
       <section className="intro">
         <p className="eyebrow">The collection</p>
         <h1 className="display">Every kitchen essential, one trusted shop</h1>
-        <p>Seven categories of original appliances with warranty, chosen for busy family kitchens, cafes and restaurants. Pick a category to explore.</p>
+        <p>{CATEGORIES.length} categories of original appliances with warranty, chosen for busy family kitchens, cafes and restaurants. Pick a category to explore.</p>
       </section>
 
-      <CategoryMosaic counts={counts} />
+      <CategoryMosaic categories={CATEGORIES} counts={counts} />
 
       <section className="wrap section" id="all">
         <div className="section-heading">
@@ -33,7 +32,7 @@ export default async function Shop() {
             ))}
           </div>
         </div>
-        <ShopFilters products={products} />
+        <ShopFilters products={products} categories={CATEGORIES} />
       </section>
     </>
   );

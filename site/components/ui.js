@@ -1,7 +1,7 @@
 import Link from "next/link";
 import NavLinks from "./NavLinks";
 import ScrollHeader from "./ScrollHeader";
-import { SITE, CATEGORIES, waLink, catName } from "@/lib/site";
+import { SITE, waLink } from "@/lib/site";
 
 export function Emblem({ size = 48 }) {
   return (
@@ -59,7 +59,7 @@ export function Header() {
   );
 }
 
-export function Footer() {
+export function Footer({ categories = [] }) {
   const year = new Date().getFullYear();
   return (
     <footer className="site-footer" id="contact">
@@ -72,7 +72,7 @@ export function Footer() {
         <div>
           <h4>Shop</h4>
           <Link href="/shop">All categories</Link>
-          {CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <Link key={c.slug} href={`/category/${c.slug}`}>{c.name}</Link>
           ))}
         </div>
@@ -127,7 +127,7 @@ export function ProductCard({ p }) {
     <article className="card">
       <Link href={href} className="card-img">
         <img src={p.images?.[0] || "/products/p1.jpg"} alt={p.name} loading="lazy" />
-        <span className="card-badge">{catName(p.category)}</span>
+        <span className="card-badge">{p.categoryName || p.category}</span>
         {p.featured && <span className="card-flag">Best seller</span>}
       </Link>
       <div className="card-body">
@@ -145,10 +145,12 @@ export function ProductCard({ p }) {
   );
 }
 
-export function CategoryMosaic({ counts = {}, exclude }) {
-  const list = CATEGORIES.filter((c) => c.slug !== exclude);
+export function CategoryMosaic({ categories = [], counts = {}, exclude }) {
+  const list = categories.filter((c) => c.slug !== exclude);
+  // The designed 7-tile layout is kept when there are exactly 7; any other number flows into a tidy grid.
+  const layout = exclude ? " mosaic-strip" : list.length === 7 ? "" : " mosaic-auto";
   return (
-    <div className={"mosaic" + (exclude ? " mosaic-strip" : "")}>
+    <div className={"mosaic" + layout}>
       {list.map((c, i) => (
         <Link key={c.slug} href={`/category/${c.slug}`} className={"mtile m" + (i + 1)}>
           <img src={c.img} alt="" loading="lazy" />

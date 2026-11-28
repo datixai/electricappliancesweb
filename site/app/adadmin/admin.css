@@ -98,3 +98,19 @@
   .ad-row-actions { grid-column: 1 / -1; justify-content: flex-end; }
   .ad-2 { grid-template-columns: 1fr; }
 }
+
+/* Categories */
+.ad-cats { margin-bottom: 22px; }
+.ad-cats .ad-card-head h2 span { font-size: 14px; color: #5b6678; font-weight: 500; margin-left: 6px; }
+.ad-catform { display: grid; gap: 14px; padding: 4px 0 18px; border-bottom: 1px solid #e3e7ef; margin-bottom: 14px; }
+.ad-catform h3 { margin: 0; font-size: 16px; }
+.ad-catphoto { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.ad-catphoto img { width: 120px; height: 76px; object-fit: cover; border-radius: 10px; border: 1px solid #e3e7ef; }
+.ad-catphoto small { flex: 1 1 220px; color: #5b6678; }
+.ad-catlist { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; }
+.ad-catrow { display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid #e3e7ef; border-radius: 12px; background: #fff; }
+.ad-catrow img { width: 64px; height: 48px; object-fit: cover; border-radius: 8px; flex: none; }
+.ad-catrow .ad-row-info { flex: 1; min-width: 0; }
+.ad-catrow .ad-row-info b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ad-catrow .ad-row-info span { color: #5b6678; font-size: 13px; }
+.ad-catrow .ad-row-actions { flex-wrap: wrap; justify-content: flex-end; }

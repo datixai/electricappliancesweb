@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProducts } from "@/lib/store";
-import { SITE, catName, waLink } from "@/lib/site";
+import { SITE, waLink } from "@/lib/site";
 import JsonLd from "@/components/JsonLd";
 import { ProductCard, WaIcon } from "@/components/ui";
 import Gallery from "./Gallery";
@@ -40,7 +40,7 @@ function productSchema(p) {
       description: p.description,
       sku: p.model || p.id,
       mpn: p.model || undefined,
-      category: catName(p.category),
+      category: p.categoryName,
       image: (p.images || []).map((src) => (src.startsWith("http") ? src : SITE.url + src)),
       brand: p.brand ? { "@type": "Brand", name: p.brand } : undefined,
       url,
@@ -54,7 +54,7 @@ function productSchema(p) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE.url + "/" },
-        { "@type": "ListItem", position: 2, name: catName(p.category), item: `${SITE.url}/category/${p.category}` },
+        { "@type": "ListItem", position: 2, name: p.categoryName, item: `${SITE.url}/category/${p.category}` },
         { "@type": "ListItem", position: 3, name: p.name, item: url },
       ],
     },
@@ -72,13 +72,13 @@ export default async function Product({ params }) {
       <JsonLd data={productSchema(p)} />
       <nav className="product-breadcrumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span aria-hidden="true">/</span>
-        <Link href={`/category/${p.category}`}>{catName(p.category)}</Link><span aria-hidden="true">/</span>
+        <Link href={`/category/${p.category}`}>{p.categoryName}</Link><span aria-hidden="true">/</span>
         <span aria-current="page">{p.name}</span>
       </nav>
       <div className="product-layout">
         <Gallery images={p.images?.length ? p.images : ["/products/p1.jpg"]} name={p.name} />
         <div className="product-info">
-          <span className="product-category">{catName(p.category)}</span>
+          <span className="product-category">{p.categoryName}</span>
           <h1 className="product-title">{p.name}</h1>
           <dl className="product-meta">
             {p.brand && <div><dt>Brand</dt><dd>{p.brand}</dd></div>}

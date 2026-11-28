@@ -2,10 +2,13 @@ import fs from "fs/promises";
 import path from "path";
 import crypto from "crypto";
 import { cookies } from "next/headers";
+import { cache } from "react";
 import { fb, ADMIN_EMAIL } from "./firebase";
+import { DEFAULT_CATEGORIES } from "./site";
 
 const DATA = path.join(process.cwd(), "data");
 const FILE = path.join(DATA, "products.json");
+const CATS_FILE = path.join(DATA, "categories.json");
 export const COOKIE = "sc_admin";
 
 // ---------- Products ----------
@@ -19,7 +22,31 @@ async function readJson() {
   }
 }
 
+export const getCategories = cache(async () => {
+  const f = await fb();
+  let list = null;
+  if (!f) {
+    try {
+      list = JSON.parse(await fs.readFile(CATS_FILE, "utf8"));
+    } catch {}
+  } else {
+    try {
+      const snap = await f.db.collection("categories").orderBy("order").get();
+      if (!snap.empty) list = snap.docs.map((d) => ({ slug: d.id, ...d.data() }));
+    } catch (e) {
+      console.error("Firestore categories read failed", e.message);
+    }
+  }
+  return (list && list.length ? list : DEFAULT_CATEGORIES).map(({ slug, name, blurb, img }) => ({ slug, name, blurb: blurb || "", img }));
+});
+
 export async function getProducts() {
+  const [list, cats] = await Promise.all([readProducts(), getCategories()]);
+  const names = Object.fromEntries(cats.map((c) => [c.slug, c.name]));
+  return list.map((p) => ({ ...p, categoryName: names[p.category] || p.category }));
+}
+
+async function readProducts() {
   const f = await fb();
   if (!f) return readJson();
   try {
@@ -32,6 +59,46 @@ export async function getProducts() {
     console.error("Firestore read failed", e.message);
     return readJson();
   }
+}
+
+// ---------- Categories (admin) ----------
+// The first change writes the starting categories into Firestore, so nothing is lost.
+export async function saveCategory(slug, data) {
+  const current = await getCategories();
+  const f = await fb();
+  if (!f) {
+    const i = current.findIndex((c) => c.slug === slug);
+    const next = i >= 0 ? current.map((c, k) => (k === i ? { ...c, ...data, slug } : c)) : [...current, { slug, ...data }];
+    await fs.mkdir(DATA, { recursive: true });
+    await fs.writeFile(CATS_FILE, JSON.stringify(next, null, 2));
+    return;
+  }
+  const col = f.db.collection("categories");
+  if ((await col.limit(1).get()).empty) {
+    const batch = f.db.batch();
+    current.forEach((c, i) => batch.set(col.doc(c.slug), { name: c.name, blurb: c.blurb, img: c.img, order: i }));
+    await batch.commit();
+  }
+  const ref = col.doc(slug);
+  if ((await ref.get()).exists) await ref.set({ ...data, updatedAt: Date.now() }, { merge: true });
+  else await ref.set({ ...data, order: current.length + 1, updatedAt: Date.now() });
+}
+
+export async function removeCategory(slug) {
+  const current = await getCategories();
+  const f = await fb();
+  if (!f) {
+    await fs.mkdir(DATA, { recursive: true });
+    await fs.writeFile(CATS_FILE, JSON.stringify(current.filter((c) => c.slug !== slug), null, 2));
+    return;
+  }
+  const col = f.db.collection("categories");
+  if ((await col.limit(1).get()).empty) {
+    const batch = f.db.batch();
+    current.forEach((c, i) => batch.set(col.doc(c.slug), { name: c.name, blurb: c.blurb, img: c.img, order: i }));
+    await batch.commit();
+  }
+  await col.doc(slug).delete();
 }
 
 export async function upsertProduct(id, data) {
